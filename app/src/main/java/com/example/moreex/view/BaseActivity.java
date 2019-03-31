@@ -13,16 +13,31 @@ public class BaseActivity extends AppCompatActivity {
     public ProgressBar progressBar;
 
     public void showProgressBar(){
-        progressBar = findViewById(R.id.progress_bar);
-        progressBar.setVisibility(View.VISIBLE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar = findViewById(R.id.progress_bar);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     public void hideProgressBar(){
-        progressBar = findViewById(R.id.progress_bar);
-        progressBar.setVisibility(View.GONE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar = findViewById(R.id.progress_bar);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
-    public void makeToast(String msg){
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+    public void makeToast(final String msg){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(BaseActivity.this,msg,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

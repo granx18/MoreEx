@@ -59,6 +59,81 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
         });
     }
 
+    @Override
+    public void showLoading() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showProgressBar();
+            }
+        });
+    }
+
+    @Override
+    public void hideLoading() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                hideProgressBar();
+
+            }
+        });
+    }
+
+    @Override
+    public void showToast(final String msg) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                makeToast(msg);
+
+            }
+        });
+    }
+
+    @Override
+    public void showRightToast() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showToast("Success");
+            }
+        });
+    }
+
+    @Override
+    public void showWrongToast() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showToast("Username or password wrong");
+            }
+        });
+    }
+
+    @Override
+    public Activity getSelfActivity() {
+        return this;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        fab.hide();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fab.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        loginPresenter.detachView();
+        super.onDestroy();
+    }
+
     public void showActivityThree(){
         Explode explode = new Explode();
         explode.setDuration(500);
@@ -78,45 +153,4 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
 
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        fab.hide();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        fab.show();
-    }
-
-    @Override
-    public void showLoading() {
-        showProgressBar();
-    }
-
-    @Override
-    public void hideLoading() {
-        hideProgressBar();
-    }
-
-    @Override
-    public void showToast(String msg) {
-        makeToast(msg);
-    }
-
-    @Override
-    public void showRightToast() {
-        showToast("Success");
-    }
-
-    @Override
-    public void showWrongToast() {
-        showToast("Username or password wrong");
-    }
-
-    @Override
-    public Activity getSelfActivity() {
-        return this;
-    }
 }
