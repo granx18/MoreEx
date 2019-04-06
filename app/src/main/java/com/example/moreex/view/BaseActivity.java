@@ -7,11 +7,17 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.moreex.R;
+import com.example.moreex.presenter.ActivityCollector;
 
 
 public class BaseActivity extends AppCompatActivity implements BaseView {
 
     public ProgressBar progressBar;
+
+    public BaseActivity() {
+        super();
+        ActivityCollector.addActivity(this);
+    }
 
     public void showProgressBar(){
         runOnUiThread(new Runnable() {

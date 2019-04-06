@@ -8,11 +8,13 @@ import android.transition.Explode;
 
 import com.example.moreex.R;
 import com.example.moreex.view.BaseActivity;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import eu.long1.spacetablayout.SpaceTabLayout;
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseActivity {
 
@@ -26,6 +28,8 @@ public class MainActivity extends BaseActivity {
         setAnime();
 
         initSpaceTabLayout(savedInstanceState);
+
+        requestPermissions();
     }
 
     private void setAnime(){
@@ -38,8 +42,7 @@ public class MainActivity extends BaseActivity {
 
     void initSpaceTabLayout(Bundle savedInstanceState){
         //add the activity to display in a list
-
-        fragmentList.add(new Fragment());
+        fragmentList.add(new Fragment1());
         fragmentList.add(new Fragment2());
         fragmentList.add(new Fragment());
 
@@ -52,5 +55,23 @@ public class MainActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
         tabLayout.saveState(outState);
         super.onSaveInstanceState(outState);
+    }
+
+    private void requestPermissions(){
+        RxPermissions rxPermissions = new RxPermissions(MainActivity.this);
+        rxPermissions.request("android.permission.INTERNET",
+                "android.permission.WRITE_EXTERNAL_STORAGE",
+                "android.permission.ACCESS_NETWORK_STATE",
+                "android.permission.ACCESS_WIFI_STATE",
+                "android.permission.READ_PHONE_STATE",
+                "android.permission.ACCESS_COARSE_LOCATION").subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                if(aBoolean);
+                else{
+                    finish();
+                }
+            }
+        });
     }
 }

@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.transition.Explode;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -29,11 +30,12 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.a_activity_one);
         initView();
         setListener();
-
         loginPresenter = new LoginPresenter(this);
+
     }
 
     private void initView() {

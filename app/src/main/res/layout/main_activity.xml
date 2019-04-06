@@ -25,5 +25,5 @@
         app:layout_behavior="eu.long1.spacetablayout.SpaceTabLayoutBehavior"
     />
 
-    
+
 </android.support.design.widget.CoordinatorLayout>
