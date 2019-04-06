@@ -15,6 +15,7 @@ import android.widget.EditText;
 import com.example.moreex.R;
 import com.example.moreex.presenter.LoginPresenter;
 import com.example.moreex.view.BaseActivity;
+import com.example.moreex.view.main.MainActivity;
 
 public class AActivityOne extends BaseActivity implements IActivityOne{
 
@@ -60,38 +61,6 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
     }
 
     @Override
-    public void showLoading() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                showProgressBar();
-            }
-        });
-    }
-
-    @Override
-    public void hideLoading() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                hideProgressBar();
-
-            }
-        });
-    }
-
-    @Override
-    public void showToast(final String msg) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                makeToast(msg);
-
-            }
-        });
-    }
-
-    @Override
     public void showRightToast() {
         runOnUiThread(new Runnable() {
             @Override
@@ -109,11 +78,6 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
                 showToast("Username or password wrong");
             }
         });
-    }
-
-    @Override
-    public Activity getSelfActivity() {
-        return this;
     }
 
     @Override
@@ -141,7 +105,7 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
         getWindow().setExitTransition(explode);
         getWindow().setEnterTransition(explode);
         ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(AActivityOne.this);
-        Intent i2 = new Intent(AActivityOne.this,AActivityThree.class);
+        Intent i2 = new Intent(AActivityOne.this, MainActivity.class);
         startActivity(i2, oc2.toBundle());
     }
 

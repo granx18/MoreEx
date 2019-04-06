@@ -1,5 +1,6 @@
 package com.example.moreex.view;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -8,7 +9,7 @@ import android.widget.Toast;
 import com.example.moreex.R;
 
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements BaseView {
 
     public ProgressBar progressBar;
 
@@ -39,5 +40,41 @@ public class BaseActivity extends AppCompatActivity {
                 Toast.makeText(BaseActivity.this,msg,Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void showLoading() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showProgressBar();
+            }
+        });
+    }
+
+    @Override
+    public void hideLoading() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                hideProgressBar();
+
+            }
+        });
+    }
+
+    @Override
+    public void showToast(final String msg) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                makeToast(msg);
+            }
+        });
+    }
+
+    @Override
+    public Activity getSelfActivity() {
+        return this;
     }
 }
