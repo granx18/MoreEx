@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.transition.Explode;
 
 import com.example.moreex.R;
+import com.example.moreex.presenter.ActivityCollector;
 import com.example.moreex.view.BaseActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -64,12 +65,18 @@ public class MainActivity extends BaseActivity {
                 "android.permission.ACCESS_NETWORK_STATE",
                 "android.permission.ACCESS_WIFI_STATE",
                 "android.permission.READ_PHONE_STATE",
-                "android.permission.ACCESS_COARSE_LOCATION").subscribe(new Consumer<Boolean>() {
+                "android.permission.ACCESS_COARSE_LOCATION",
+                "android.permission.ACCESS_FINE_LOCATION",
+                "android.permission.CHANGE_WIFI_STATE",
+                "android.permission.INTERNET",
+                "android.permission.ACCESS_LOCATION_EXTRA_COMMANDS",
+                "android.permission.BLUETOOTH",
+                "android.permission.BLUETOOTH_ADMIN").subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) throws Exception {
                 if(aBoolean);
                 else{
-                    finish();
+                    ActivityCollector.finishAll();
                 }
             }
         });
