@@ -19,5 +19,5 @@ public interface BaseView {
      */
     void showToast(String msg);
 
-    Activity getSelfActivity();
+    BaseActivity getSelfActivity();
 }

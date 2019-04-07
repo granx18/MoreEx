@@ -1,13 +1,12 @@
 package com.example.moreex.view;
 
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.moreex.R;
-import com.example.moreex.presenter.ActivityCollector;
+import com.example.moreex.model.ActivityCollector;
 
 
 public class BaseActivity extends AppCompatActivity implements BaseView {
@@ -80,7 +79,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     }
 
     @Override
-    public Activity getSelfActivity() {
+    public BaseActivity getSelfActivity() {
         return this;
     }
 }

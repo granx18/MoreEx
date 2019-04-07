@@ -25,6 +25,7 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
     private Button btGo;
     private CardView cv;
     private FloatingActionButton fab;
+
     private LoginPresenter loginPresenter;
 
     @Override

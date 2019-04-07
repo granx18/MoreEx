@@ -1,4 +1,4 @@
-package com.example.moreex.presenter;
+package com.example.moreex.model;
 
 import android.app.Activity;
 

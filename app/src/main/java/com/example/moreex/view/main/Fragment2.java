@@ -1,6 +1,7 @@
 package com.example.moreex.view.main;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
@@ -9,15 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 
 import com.ecloud.pulltozoomview.PullToZoomListViewEx;
 import com.example.moreex.R;
+import com.example.moreex.presenter.Fragment2Presenter;
+import com.example.moreex.view.BaseActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment2 extends Fragment {
+public class Fragment2 extends Fragment implements IFragment2{
 
+    private Fragment2Presenter fragment2Presenter = new Fragment2Presenter(this);
 
     public Fragment2() {
         // Required empty public constructor
@@ -31,16 +36,34 @@ public class Fragment2 extends Fragment {
 
         listView = view.findViewById(R.id.listview);
 
-        String[] adapterData = new String[]{"Activity", "Service", "Content Provider", "Intent", "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient",
-                "DDMS", "Android Studio", "Fragment", "Loader", "Activity", "Service", "Content Provider", "Intent",
-                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient", "Activity", "Service", "Content Provider", "Intent",
-                "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient"};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                getContext(),android.R.layout.simple_list_item_1,adapterData);
-        listView.setAdapter(adapter);
+        //发起请求
+        fragment2Presenter.requestAdapter();
 
         return view;
     }
 
+    @Override
+    public void onSuccess(BaseAdapter adapter) {
+        listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showToast(String msg) {
+        getSelfActivity().showToast(msg);
+    }
+
+    @Override
+    public BaseActivity getSelfActivity() {
+        return (BaseActivity)this.getActivity();
+    }
 }

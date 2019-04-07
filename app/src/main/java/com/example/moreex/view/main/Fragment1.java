@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
+import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
@@ -48,23 +50,42 @@ public class Fragment1 extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         textureMapView = getView().findViewById(R.id.map);
-
         if(textureMapView != null){
             textureMapView.onCreate(savedInstanceState);
             aMap = textureMapView.getMap();
             if (getCameraPosition() == null) {
-                aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(getTarget(), 10, 0, 0)));
+                aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(getTarget(), 17, 0, 0)));
             }else {
                 aMap.moveCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition()));
             }
         }
 
+        customMap();
+    }
+
+    //定制地图
+    private void customMap(){
+        initBluePoint();
+        customUiSettings();
+    }
+
+    //小蓝点
+    private void initBluePoint(){
         MyLocationStyle myLocationStyle;
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
         myLocationStyle.interval(1000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
+
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
-        //aMap.getUiSettings().setMyLocationButtonEnabled(true);设置默认定位按钮是否显示，非必需设置。
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
+    }
+
+    //定制控件交互
+    private void customUiSettings(){
+        UiSettings uiSettings = aMap.getUiSettings();
+        uiSettings.setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
+        uiSettings.setZoomControlsEnabled(false);
+        uiSettings.setCompassEnabled(true);
+        uiSettings.setScaleControlsEnabled(true);
     }
 
     public Fragment1() {
@@ -72,7 +93,7 @@ public class Fragment1 extends Fragment {
     }
 
     public LatLng getTarget(){
-        return new LatLng(30.287459,120.153576);
+        return new LatLng(32.04,118.78	);
     }
 
     public CameraPosition getCameraPosition(){

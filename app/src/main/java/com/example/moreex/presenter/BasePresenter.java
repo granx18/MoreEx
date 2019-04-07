@@ -6,6 +6,7 @@ import java.lang.ref.WeakReference;
 
 public class BasePresenter <T extends BaseView> {
 
+    //弱引用，防内存泄漏问题
     private WeakReference<T> mViewRef;
 
     BasePresenter(T view){

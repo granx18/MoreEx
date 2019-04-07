@@ -3,11 +3,10 @@ package com.example.moreex.view.main;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import android.support.v4.view.ViewPager;
 import android.transition.Explode;
 
 import com.example.moreex.R;
-import com.example.moreex.presenter.ActivityCollector;
+import com.example.moreex.model.ActivityCollector;
 import com.example.moreex.view.BaseActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -47,7 +46,7 @@ public class MainActivity extends BaseActivity {
         fragmentList.add(new Fragment2());
         fragmentList.add(new Fragment());
 
-        ViewPager viewPager = findViewById(R.id.viewPager);
+        ScrollViewPager viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.spaceTabLayout);
         tabLayout.initialize(viewPager,getSupportFragmentManager(),fragmentList,savedInstanceState);
     }
@@ -76,6 +75,7 @@ public class MainActivity extends BaseActivity {
             public void accept(Boolean aBoolean) throws Exception {
                 if(aBoolean);
                 else{
+                    showToast("权限不足，请重试");
                     ActivityCollector.finishAll();
                 }
             }
