@@ -15,6 +15,7 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
         loginModel = new LoginModel(this);
     }
 
+    //向model发起请求
     public void requestLogin(String data){
         getView().showLoading();
         loginModel.logining();

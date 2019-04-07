@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import android.transition.Explode;
+import android.widget.Toast;
 
 import com.example.moreex.R;
 import com.example.moreex.model.ActivityCollector;
@@ -12,6 +13,8 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import eu.long1.spacetablayout.SpaceTabLayout;
 import io.reactivex.functions.Consumer;
@@ -80,5 +83,24 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    private static boolean mBackKeyPressed = false;//记录是否有首次按键
+
+    @Override
+    public void onBackPressed() {
+        if(!mBackKeyPressed){
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+             mBackKeyPressed = true;
+            new Timer().schedule(new TimerTask() {//延时两秒，如果超出则擦错第一次按键记录
+              @Override
+              public void run() {
+                  mBackKeyPressed = false;
+            }
+        }, 2000);
+    }
+        else{//退出程序
+            ActivityCollector.finishAll();
+        }
     }
 }
