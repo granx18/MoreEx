@@ -3,6 +3,7 @@ package com.example.moreex.model;
 import android.os.AsyncTask;
 
 import com.example.moreex.presenter.BaseCallback;
+import com.example.moreex.presenter.LoginCallback;
 
 public class LoginModel <T extends BaseCallback>extends BaseModel {
     private T mCallback;
@@ -18,8 +19,8 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            mCallback.onSuccess("test");
-            mCallback.onComplete();
+            ((LoginCallback)mCallback).onSuccess("test");
+            ((LoginCallback)mCallback).onComplete();
         }
 
         @Override

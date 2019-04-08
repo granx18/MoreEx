@@ -1,7 +1,5 @@
 package com.example.moreex.view;
 
-import android.app.Activity;
-
 public interface BaseView {
 
     /**

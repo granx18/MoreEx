@@ -37,5 +37,4 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
         getView().hideLoading();
     }
 
-
 }

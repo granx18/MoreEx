@@ -28,20 +28,4 @@ public class Fragment2Presenter extends BasePresenter implements Fragment2Callba
         ((Fragment2)getView()).onSuccess(adapter);
     }
 
-    @Override
-    public void onSuccess(String data) {
-
-    }
-
-    @Override
-    public void onFailure(String msg) {
-
-    }
-
-    @Override
-    public void onComplete() {
-
-    }
-
-
 }

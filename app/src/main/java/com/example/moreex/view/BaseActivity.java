@@ -15,6 +15,8 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
     public BaseActivity() {
         super();
+
+        //向活动管理类添加当前活动
         ActivityCollector.addActivity(this);
     }
 
