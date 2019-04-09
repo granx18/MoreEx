@@ -36,19 +36,14 @@ public class Fragment2 extends Fragment implements IFragment2{
 
         listView = view.findViewById(R.id.listview);
 
-        //发起请求
         fragment2Presenter.requestAdapter();
-
         return view;
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if(hidden){
-            return;
-        }
-        else{
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
             fragment2Presenter.requestAdapter();
         }
     }
@@ -60,12 +55,12 @@ public class Fragment2 extends Fragment implements IFragment2{
 
     @Override
     public void showLoading() {
-
+        getSelfActivity().showLoading();
     }
 
     @Override
     public void hideLoading() {
-
+        getSelfActivity().hideLoading();
     }
 
     @Override

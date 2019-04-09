@@ -16,6 +16,7 @@ public class Fragment2Presenter extends BasePresenter implements Fragment2Callba
 
     //向Model发起请求
     public void requestAdapter(){
+        getView().showLoading();
         fragment2Model.getAdapterData();
     }
 
@@ -25,5 +26,7 @@ public class Fragment2Presenter extends BasePresenter implements Fragment2Callba
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                getView().getSelfActivity() ,android.R.layout.simple_list_item_1,adapterData);
         ((Fragment2)getView()).onSuccess(adapter);
+        getView().hideLoading();
     }
+
 }

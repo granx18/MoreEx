@@ -1,8 +1,13 @@
 package com.example.moreex.view;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.moreex.R;
@@ -12,20 +17,31 @@ import com.example.moreex.model.ActivityCollector;
 public class BaseActivity extends AppCompatActivity implements BaseView {
 
     public ProgressBar progressBar;
+    public View loadingView;
 
     public BaseActivity() {
         super();
 
         //向活动管理类添加当前活动
         ActivityCollector.addActivity(this);
+
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //progressBar
+        loadingView = LayoutInflater.from(getSelfActivity()).inflate(R.layout.progress_bar,null);
+        progressBar = loadingView.findViewById(R.id.progress_bar_global);
     }
 
     public void showProgressBar(){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                progressBar = findViewById(R.id.progress_bar);
+                addContentView(loadingView,new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT));
                 progressBar.setVisibility(View.VISIBLE);
+
             }
         });
     }
@@ -34,8 +50,8 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                progressBar = findViewById(R.id.progress_bar);
-                progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.INVISIBLE);
+                ((ViewGroup)loadingView.getParent()).removeView(loadingView);
             }
         });
     }
