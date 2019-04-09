@@ -1,12 +1,15 @@
 package com.example.moreex.view.main;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
@@ -19,6 +22,8 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.example.moreex.R;
 
 import java.lang.reflect.Field;
+
+import at.markushi.ui.CircleButton;
 
 
 /**
@@ -36,6 +41,7 @@ public class Fragment1 extends Fragment {
     //工具
     private TextView textViewMiles;
     private TextView textViewTime;
+    private CircleButton buttonPlay;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +74,13 @@ public class Fragment1 extends Fragment {
 
         textViewMiles = getView().findViewById(R.id.textView_miles);
         textViewTime = getView().findViewById(R.id.textView_time);
+        buttonPlay = getView().findViewById(R.id.button_play);
+        buttonPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonChangeColor();
+            }
+        });
     }
 
     //定制地图
@@ -159,6 +172,19 @@ public class Fragment1 extends Fragment {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    //按钮更换颜色
+    private boolean BUTTON_STATE_PLAY = false;
+    private void buttonChangeColor(){
+        if(!BUTTON_STATE_PLAY){
+            buttonPlay.setColor(ContextCompat.getColor(getContext(),R.color.colorAccent));
+            BUTTON_STATE_PLAY = true;
+        }
+        else{
+            buttonPlay.setColor(ContextCompat.getColor(getContext(),R.color.colorPrimary));
+            BUTTON_STATE_PLAY = false;
         }
     }
 }

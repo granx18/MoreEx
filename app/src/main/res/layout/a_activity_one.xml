@@ -15,7 +15,7 @@
         android:layout_gravity="top"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        app:SpinKit_Color="@color/colorAccent"
+        app:SpinKit_Color="@color/colorPrimary"
         android:visibility="invisible"/>
 
     <android.support.v7.widget.CardView

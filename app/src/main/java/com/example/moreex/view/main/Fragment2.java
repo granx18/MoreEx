@@ -43,6 +43,17 @@ public class Fragment2 extends Fragment implements IFragment2{
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+            return;
+        }
+        else{
+            fragment2Presenter.requestAdapter();
+        }
+    }
+
+    @Override
     public void onSuccess(BaseAdapter adapter) {
         listView.setAdapter(adapter);
     }
