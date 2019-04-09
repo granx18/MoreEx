@@ -19,7 +19,6 @@ public class Fragment2Presenter extends BasePresenter implements Fragment2Callba
         fragment2Model.getAdapterData();
     }
 
-
     @Override
     //结合Model返回的数据生成Adapter
     public void onSuccess(String[] adapterData) {
@@ -27,5 +26,4 @@ public class Fragment2Presenter extends BasePresenter implements Fragment2Callba
                getView().getSelfActivity() ,android.R.layout.simple_list_item_1,adapterData);
         ((Fragment2)getView()).onSuccess(adapter);
     }
-
 }

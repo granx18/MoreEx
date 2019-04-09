@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
@@ -31,12 +32,10 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.a_activity_one);
         initView();
         setListener();
         loginPresenter = new LoginPresenter(this);
-
     }
 
     private void initView() {
@@ -62,6 +61,8 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
             }
         });
     }
+
+
 
     @Override
     public void showRightToast() {

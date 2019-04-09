@@ -16,12 +16,6 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
     }
 
     private class TestTask extends AsyncTask<String,Integer,String>{
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            ((LoginCallback)mCallback).onSuccess("test");
-            ((LoginCallback)mCallback).onComplete();
-        }
 
         @Override
         protected String doInBackground(String... strings) {
@@ -31,6 +25,13 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
                 e.printStackTrace();
             }
             return "test";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            ((LoginCallback)mCallback).onSuccess("test");
+            ((LoginCallback)mCallback).onComplete();
         }
     }
 }

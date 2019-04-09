@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -32,6 +33,10 @@ public class Fragment1 extends Fragment {
     private AMap aMap;
     protected static CameraPosition cameraPosition;
 
+    //工具
+    private TextView textViewMiles;
+    private TextView textViewTime;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +58,16 @@ public class Fragment1 extends Fragment {
             textureMapView.onCreate(savedInstanceState);
             aMap = textureMapView.getMap();
             if (getCameraPosition() == null) {
-                aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(getTarget(), 17, 0, 0)));
+                aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(getTarget(), 18, 0, 0)));
             }else {
                 aMap.moveCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition()));
             }
         }
 
         customMap();
+
+        textViewMiles = getView().findViewById(R.id.textView_miles);
+        textViewTime = getView().findViewById(R.id.textView_time);
     }
 
     //定制地图
