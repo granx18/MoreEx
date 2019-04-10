@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 import com.example.moreex.model.Fragment2Model;
 import com.example.moreex.view.BaseView;
 import com.example.moreex.view.main.Fragment2;
+import com.example.moreex.view.main.IFragment2;
 
 public class Fragment2Presenter extends BasePresenter implements Fragment2Callback{
     private Fragment2Model fragment2Model;
@@ -25,7 +26,7 @@ public class Fragment2Presenter extends BasePresenter implements Fragment2Callba
     public void onSuccess(String[] adapterData) {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                getView().getSelfActivity() ,android.R.layout.simple_list_item_1,adapterData);
-        ((Fragment2)getView()).onSuccess(adapter);
+        ((IFragment2)getView()).onSuccess(adapter);
         getView().hideLoading();
     }
 

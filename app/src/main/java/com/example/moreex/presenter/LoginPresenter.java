@@ -24,7 +24,7 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
     @Override
     public void onSuccess(String data) {
         ((IActivityOne)getView()).showRightToast();
-        ((AActivityOne)getView().getSelfActivity()).showActivityThree();
+        ((IActivityOne)getView()).onSuccess();
     }
 
     @Override

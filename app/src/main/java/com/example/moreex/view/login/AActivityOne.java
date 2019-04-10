@@ -63,6 +63,10 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
     }
 
 
+    @Override
+    public void onSuccess() {
+        ((AActivityOne)getSelfActivity()).showActivityThree();
+    }
 
     @Override
     public void showRightToast() {
