@@ -103,4 +103,12 @@ public class MainActivity extends BaseActivity {
             ActivityCollector.finishAll();
         }
     }
+
+
+
+
+
+
+
+
 }
