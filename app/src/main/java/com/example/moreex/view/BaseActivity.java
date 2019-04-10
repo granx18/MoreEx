@@ -120,7 +120,6 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         Notification.Builder builder = null;
         Notification notification = null;
         if(android.os.Build.VERSION.SDK_INT >= 26) {
-            //Android O上对Notification进行了修改，如果设置的targetSDKVersion>=26建议使用此种方式创建通知栏
             if (null == notificationManager) {
                 notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             }
