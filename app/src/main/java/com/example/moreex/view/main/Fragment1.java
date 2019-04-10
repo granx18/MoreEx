@@ -6,11 +6,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
@@ -19,6 +24,8 @@ import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.example.moreex.R;
+import com.example.moreex.presenter.Fragment1Presenter;
+import com.example.moreex.view.BaseActivity;
 
 import java.lang.reflect.Field;
 
@@ -28,9 +35,10 @@ import at.markushi.ui.CircleButton;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment1 extends Fragment {
+public class Fragment1 extends Fragment implements IFragment1, AMapLocationListener {
 
     private static final String TAG = "Fragment1";
+    public Fragment1Presenter presenter = new Fragment1Presenter(this);
 
     //地图
     private TextureMapView textureMapView;
@@ -41,6 +49,10 @@ public class Fragment1 extends Fragment {
     private TextView textViewMiles;
     private TextView textViewTime;
     private CircleButton buttonPlay;
+
+    //定位
+    private AMapLocationClient mLocationClient;
+    private AMapLocationClientOption mLocationOption;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +89,12 @@ public class Fragment1 extends Fragment {
         buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonChangeColor();
+                if(!BUTTON_STATE_PLAY){
+                    presenter.requestStartSport();
+                }
+                else{
+                    presenter.requestEndSport();
+                }
             }
         });
     }
@@ -107,6 +124,38 @@ public class Fragment1 extends Fragment {
         uiSettings.setZoomControlsEnabled(false);
         uiSettings.setCompassEnabled(true);
         uiSettings.setScaleControlsEnabled(true);
+    }
+
+    public void stopLocation(){
+        mLocationClient.stopLocation();
+    }
+
+    public void startLocation(){
+        mLocationClient = new AMapLocationClient(getContext());
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位监听
+        mLocationClient.setLocationListener(this);
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        mLocationOption.setInterval(1000);
+
+        mLocationClient.setLocationOption(mLocationOption);
+        mLocationClient.startLocation();
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        LatLng myLocation = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
+        submitPerFive(myLocation);
+        Log.d(TAG, myLocation.toString());
+    }
+
+    public int RECORD_TIMES = 0;
+    public void submitPerFive(LatLng myLocation){
+        RECORD_TIMES++;
+        if(RECORD_TIMES==5){
+            presenter.requestSubmitTracePoint(myLocation);
+            RECORD_TIMES = 0;
+        }
     }
 
     public Fragment1() {
@@ -178,7 +227,7 @@ public class Fragment1 extends Fragment {
 
     //按钮更换颜色
     private boolean BUTTON_STATE_PLAY = false;
-    private void buttonChangeColor(){
+    public void buttonChangeColor(){
         if(!BUTTON_STATE_PLAY){
             buttonPlay.setColor(ContextCompat.getColor(getContext(),R.color.colorAccent));
             BUTTON_STATE_PLAY = true;
@@ -188,4 +237,37 @@ public class Fragment1 extends Fragment {
             BUTTON_STATE_PLAY = false;
         }
     }
+
+    @Override
+    public void showLoading() {
+        getSelfActivity().showLoading();
+    }
+
+    @Override
+    public void hideLoading() {
+        getSelfActivity().hideLoading();
+    }
+
+    @Override
+    public void showToast(String msg) {
+        getSelfActivity().showToast(msg);
+    }
+
+    @Override
+    public BaseActivity getSelfActivity() {
+        return (BaseActivity) getActivity();
+    }
+
+    @Override
+    public void onSuccessStartSport() {
+        buttonChangeColor();
+        startLocation();
+    }
+
+    @Override
+    public void onSuccessEndSport() {
+        buttonChangeColor();
+        stopLocation();
+    }
+
 }
