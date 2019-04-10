@@ -115,7 +115,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     private NotificationManager notificationManager = null;
     boolean isCreateChannel = false;
     @SuppressLint("NewApi")
-    public Notification buildNotification() {
+    public Notification buildMapNotification() {
 
         Notification.Builder builder = null;
         Notification notification = null;

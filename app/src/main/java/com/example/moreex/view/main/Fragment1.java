@@ -262,7 +262,7 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
     public void onSuccessStartSport() {
         buttonChangeColor();
         startLocation();
-        mLocationClient.enableBackgroundLocation(2333,getSelfActivity().buildNotification());
+        mLocationClient.enableBackgroundLocation(2333,getSelfActivity().buildMapNotification());
     }
 
     @Override
