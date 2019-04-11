@@ -15,6 +15,7 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
         loginModel = new LoginModel(this);
     }
 
+    //向model发起请求
     public void requestLogin(String data){
         getView().showLoading();
         loginModel.logining();
@@ -23,7 +24,7 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
     @Override
     public void onSuccess(String data) {
         ((IActivityOne)getView()).showRightToast();
-        ((AActivityOne)getView().getSelfActivity()).showActivityThree();
+        ((IActivityOne)getView()).onSuccess();
     }
 
     @Override
@@ -35,6 +36,5 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
     public void onComplete() {
         getView().hideLoading();
     }
-
 
 }

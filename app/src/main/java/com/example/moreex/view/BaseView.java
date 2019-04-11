@@ -1,7 +1,5 @@
 package com.example.moreex.view;
 
-import android.app.Activity;
-
 public interface BaseView {
 
     /**
@@ -19,5 +17,5 @@ public interface BaseView {
      */
     void showToast(String msg);
 
-    Activity getSelfActivity();
+    BaseActivity getSelfActivity();
 }
