@@ -17,12 +17,15 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.Polyline;
+import com.amap.api.maps.model.PolylineOptions;
 import com.example.moreex.R;
 import com.example.moreex.presenter.Fragment1Presenter;
 import com.example.moreex.view.BaseActivity;
@@ -53,6 +56,16 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
     //定位
     private AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
+
+    //轨迹
+    private PolylineOptions mPolyoptions;
+    private Polyline mpolyline;
+
+    //位置时间
+    LatLng myLastLocation = null;
+    double betweenDistance = 0;
+    long mStartTime = System.currentTimeMillis();
+    long mCurrentTime = System.currentTimeMillis();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,6 +116,7 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
     private void customMap(){
         initBluePoint();
         customUiSettings();
+        initPolyLine();
     }
 
     //小蓝点
@@ -115,6 +129,13 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
 
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
+    }
+
+    //轨迹初始化
+    private void initPolyLine(){
+        mPolyoptions = new PolylineOptions();
+        mPolyoptions.width(10f);
+        mPolyoptions.color(Color.GRAY);
     }
 
     //定制控件交互
@@ -140,6 +161,8 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
 
         mLocationClient.setLocationOption(mLocationOption);
         mLocationClient.startLocation();
+
+
     }
 
     @Override
@@ -147,7 +170,32 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
         LatLng myLocation = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
         submitPerFive(myLocation);
         Log.d(TAG, myLocation.toString());
+
+        if(myLastLocation != null){
+            betweenDistance += AMapUtils.calculateLineDistance(myLastLocation,myLocation);
+            mCurrentTime = System.currentTimeMillis();
+
+            textViewMiles.setText("路程/m\n"+String.format("%.2f", betweenDistance));
+            textViewTime.setText("时间/s\n"+(mCurrentTime-mStartTime)/1000);
+        }
+        myLastLocation = myLocation;
+
+        //轨迹
+        mPolyoptions.add(myLocation);
+        reDrawLine();
     }
+
+    //实时轨迹画线
+    private void reDrawLine(){
+        if(mPolyoptions.getPoints().size()>1){
+            if(mpolyline != null){
+                mpolyline.setPoints(mPolyoptions.getPoints());
+            }else{
+                mpolyline = aMap.addPolyline(mPolyoptions);
+            }
+        }
+    }
+
 
     public int RECORD_TIMES = 0;
     public void submitPerFive(LatLng myLocation){
@@ -157,6 +205,8 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
             RECORD_TIMES = 0;
         }
     }
+
+
 
     public Fragment1() {
         // Required empty public constructor
@@ -262,13 +312,28 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
     public void onSuccessStartSport() {
         buttonChangeColor();
         startLocation();
+
+        //启动通知栏
         mLocationClient.enableBackgroundLocation(2333,getSelfActivity().buildMapNotification());
+
+        //位置时间初始化
+        textViewMiles.setText("路程/m\n"+0);
+        textViewTime.setText("时间/s\n"+0/1000);
+        myLastLocation = null;
+        betweenDistance = 0;
+        mStartTime = System.currentTimeMillis();
+
+        //轨迹
+        if(mpolyline!=null)
+            mpolyline.remove();
     }
 
     @Override
     public void onSuccessEndSport() {
         buttonChangeColor();
         stopLocation();
+
+        //停止通知栏
         mLocationClient.disableBackgroundLocation(true);
     }
 

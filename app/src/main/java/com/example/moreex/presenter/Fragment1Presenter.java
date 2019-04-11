@@ -1,10 +1,8 @@
 package com.example.moreex.presenter;
 
-import com.amap.api.location.AMapLocationClient;
 import com.amap.api.maps.model.LatLng;
 import com.example.moreex.model.Fragment1Model;
 import com.example.moreex.view.BaseView;
-import com.example.moreex.view.main.Fragment1;
 import com.example.moreex.view.main.IFragment1;
 
 public class Fragment1Presenter extends BasePresenter implements Fragment1Callback {
