@@ -2,7 +2,6 @@ package com.example.moreex.presenter;
 
 import com.example.moreex.model.LoginModel;
 import com.example.moreex.view.BaseView;
-import com.example.moreex.view.login.AActivityOne;
 import com.example.moreex.view.login.IActivityOne;
 
 public class LoginPresenter extends BasePresenter implements LoginCallback{

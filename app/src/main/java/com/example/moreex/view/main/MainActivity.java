@@ -47,7 +47,7 @@ public class MainActivity extends BaseActivity {
         //add the activity to display in a list
         fragmentList.add(new Fragment1());
         fragmentList.add(new Fragment2());
-        fragmentList.add(new Fragment());
+        fragmentList.add(new Fragment3());
 
         ScrollViewPager viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.spaceTabLayout);

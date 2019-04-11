@@ -17,6 +17,7 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
 
     private class TestTask extends AsyncTask<String,Integer,String>{
 
+
         @Override
         protected String doInBackground(String... strings) {
             try{
