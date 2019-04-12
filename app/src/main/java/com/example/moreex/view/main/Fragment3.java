@@ -63,6 +63,8 @@ public class Fragment3 extends Fragment implements IFragment3{
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (position) {
                 case 0: {
+                    Intent i = new Intent(getContext(),Me.class);
+                    startActivity(i);
                     break;
                 }
                 case 1: {
@@ -90,6 +92,7 @@ public class Fragment3 extends Fragment implements IFragment3{
                             })
                             .setNegativeButton("取消", null)
                             .show();
+                    break;
                 }
             }
         }
