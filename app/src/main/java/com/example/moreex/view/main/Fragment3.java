@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.moreex.R;
+import com.example.moreex.model.ActivityCollector;
 import com.example.moreex.presenter.Fragment3Presenter;
 import com.example.moreex.view.BaseActivity;
 
@@ -146,5 +147,6 @@ public class Fragment3 extends Fragment implements IFragment3{
     @Override
     public void onSuccessChangePwd() {
         getSelfActivity().finish();
+        ActivityCollector.removeActivity(getSelfActivity());
     }
 }
