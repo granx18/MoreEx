@@ -1,6 +1,7 @@
 package com.example.moreex.view.main;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 
 import android.transition.Explode;
@@ -104,11 +105,13 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    public void hideTabLayout(){
+        tabLayout.setVisibility(TabLayout.INVISIBLE);
+    }
 
-
-
-
-
+    public void showTabLayout(){
+        tabLayout.setVisibility(TabLayout.VISIBLE);
+    }
 
 
 }

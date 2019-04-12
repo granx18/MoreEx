@@ -231,6 +231,7 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
     public void onResume() {
         super.onResume();
         textureMapView.onResume();
+        resumeButtonColor();
     }
 
     /**
@@ -287,6 +288,13 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
             BUTTON_STATE_PLAY = false;
         }
     }
+    //回复按钮颜色
+    public void resumeButtonColor(){
+        if(BUTTON_STATE_PLAY){
+            buttonPlay.setColor(ContextCompat.getColor(getContext(),R.color.colorAccent));
+        }
+    }
+
 
     @Override
     public void showLoading() {
@@ -326,6 +334,7 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
         //轨迹
         if(mpolyline!=null)
             mpolyline.remove();
+
     }
 
     @Override
@@ -335,6 +344,14 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
 
         //停止通知栏
         mLocationClient.disableBackgroundLocation(true);
+
     }
 
+    //用于修复按钮颜色bug
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser)
+            resumeButtonColor();
+    }
 }
