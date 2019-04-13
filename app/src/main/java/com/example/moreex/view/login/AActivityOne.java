@@ -43,6 +43,8 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
         initView();
         setListener();
         loginPresenter = new LoginPresenter(this);
+
+        showNotice("title","detail");
     }
 
     private void initView() {
@@ -137,6 +139,9 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
         mBuilder.setContentTitle(title);
         mBuilder.setContentText(detail);
         Notification notification = mBuilder.build();
+        mBuilder.setDefaults(Notification.DEFAULT_SOUND);
+        mBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
+        mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
         mNotificationManager.notify(1,notification);
     }
 
