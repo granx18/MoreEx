@@ -1,6 +1,7 @@
 package com.example.moreex.view.main;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 
 import android.transition.Explode;
@@ -47,7 +48,7 @@ public class MainActivity extends BaseActivity {
         //add the activity to display in a list
         fragmentList.add(new Fragment1());
         fragmentList.add(new Fragment2());
-        fragmentList.add(new Fragment());
+        fragmentList.add(new Fragment3());
 
         ScrollViewPager viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.spaceTabLayout);
@@ -104,11 +105,13 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    public void hideTabLayout(){
+        tabLayout.setVisibility(TabLayout.INVISIBLE);
+    }
 
-
-
-
-
+    public void showTabLayout(){
+        tabLayout.setVisibility(TabLayout.VISIBLE);
+    }
 
 
 }

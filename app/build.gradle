@@ -37,4 +37,5 @@ dependencies {
     implementation 'com.amap.api:3dmap:latest.integration'
     implementation 'com.github.markushi:circlebutton:1.1'
     implementation 'com.amap.api:location:latest.integration'
+    api files('libs/swagger-android-client-1.0.0.jar')
 }

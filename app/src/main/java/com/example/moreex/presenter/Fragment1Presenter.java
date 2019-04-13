@@ -10,29 +10,28 @@ public class Fragment1Presenter extends BasePresenter implements Fragment1Callba
 
     public Fragment1Presenter(BaseView view) {
         super(view);
-
         fragment1Model = new Fragment1Model(this);
-    }
+}
 
     //向Model发起请求
     public void requestStartSport(){
         //todo
-        onSuccessStartSport();
+        fragment1Model.executeRequestStartSport();
     }
 
     public void requestSubmitTracePoint(LatLng latLng){
         //todo
-        onSuccessSubmitTracePoint();
+        fragment1Model.executeRequestSubmitTracePoint(latLng);
     }
 
     public void requestEndSport(){
         //todo
-        onSuccessEndSport();
+        fragment1Model.executeRequestEndSport();
     }
 
     public void requestSportTypeInfo(){
         //todo
-        onSuccessSportTypeInfo();
+        fragment1Model.executeRerequestSportTypeInfoTask();
     }
 
     //结合Model返回的数据进行操作
