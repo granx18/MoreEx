@@ -15,9 +15,9 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
     }
 
     //向model发起请求
-    public void requestLogin(String data){
+    public void requestLogin(String cardId,String password){
         getView().showLoading();
-        loginModel.logining();
+        loginModel.logining(cardId,password);
     }
 
     @Override
