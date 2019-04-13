@@ -142,9 +142,6 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
 
     @Override
     public void onSuccessNotice(String title, String detail) {
-        mBuilder.setContentTitle(title);
-        mBuilder.setContentText(detail);
-        Notification notification = mBuilder.build();
-        mNotificationManager.notify(1,notification);
+        showNotice(title,detail);
     }
 }
