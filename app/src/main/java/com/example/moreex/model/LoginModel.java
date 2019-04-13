@@ -15,6 +15,7 @@ import java.util.concurrent.TimeoutException;
 
 import io.swagger.client.ApiException;
 import io.swagger.client.model.ClassInfo;
+import io.swagger.client.model.Notice;
 import io.swagger.client.model.SportPlanInfo;
 import io.swagger.client.model.SportTypeInfo;
 import io.swagger.client.model.StudentInfo;
@@ -63,6 +64,10 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
                 String hashedPassword=EncoderByMd5(password);
                 try {
                     BaseVariable.sessionid = BaseVariable.studentApi.login(cardId, hashedPassword);
+                    if(BaseVariable.sessionid!=null)
+                    {
+                        BaseVariable.password=password;
+                    }
                     return  BaseVariable.sessionid;
                 } catch (ApiException e) {
                     System.err.println("Exception when calling StudentApi#login");
@@ -132,6 +137,48 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
         protected void onPostExecute(String s)
         {
 
+        }
+    }
+
+    public void executeRequestChangeIP(String ip,String port)
+    {
+        BaseVariable.studentApi.setBasePath("http://"+ip+":"+port);
+    }
+
+    public void executeRequestNotice()
+    {
+        new requestNoticeTask().execute();
+    }
+
+    private class requestNoticeTask extends AsyncTask<String,Integer,List<Notice>>
+    {
+        @Override
+        protected List<Notice> doInBackground(String... strings) {
+            try {
+                List<Notice> result = BaseVariable.
+                        studentApi.getNotices(BaseVariable.sessionid);
+                return result;
+            } catch (ApiException e) {
+                System.err.println("Exception when calling StudentApi#getNotices");
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<Notice> list)
+        {
+            super.onPostExecute(list);
+            if(list!=null)
+            {
+                ((LoginCallback)mCallback).onSuccessNotice(list);
+            }
         }
     }
 }

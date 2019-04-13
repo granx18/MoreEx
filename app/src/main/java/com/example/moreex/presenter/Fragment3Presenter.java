@@ -2,12 +2,17 @@ package com.example.moreex.presenter;
 
 import android.graphics.Bitmap;
 
+import com.example.moreex.model.Fragment3Model;
 import com.example.moreex.view.BaseView;
 import com.example.moreex.view.main.IFragment3;
 
 public class Fragment3Presenter extends BasePresenter implements Fragment3Callback {
-    public Fragment3Presenter(BaseView view) {
+    private Fragment3Model fragment3Model;
+
+    public Fragment3Presenter(BaseView view,Fragment3Model fragment3Model)
+    {
         super(view);
+        this.fragment3Model=fragment3Model;
     }
 
     public void requestChangePicture(Bitmap bitmap){
@@ -20,7 +25,7 @@ public class Fragment3Presenter extends BasePresenter implements Fragment3Callba
     }
 
     public void requestChangePwd(String pwd){
-        onSuccessChangePwd();
+        fragment3Model.executeRequestChangePwd(pwd);
     }
 
     @Override
