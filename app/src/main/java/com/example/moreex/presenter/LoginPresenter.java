@@ -19,7 +19,12 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
         getView().showLoading();
         loginModel.logining(cardId,password);
     }
+
     public void requestNotice(){
+        //todo
+    }
+
+    public void requestChangeIP(String ip,String port){
         //todo
     }
 

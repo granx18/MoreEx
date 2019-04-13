@@ -10,14 +10,24 @@ import android.transition.TransitionInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.moreex.R;
+import com.example.moreex.model.LoginModel;
+import com.example.moreex.presenter.LoginPresenter;
 import com.example.moreex.view.BaseActivity;
 
-public class AActivityTwo extends BaseActivity {
+public class AActivityTwo extends BaseActivity implements IActivityTwo{
 
     private FloatingActionButton fab;
     private CardView cvAdd;
+    private Button button;
+
+    private EditText ip = findViewById(R.id.ip);
+    private EditText port = findViewById(R.id.port);
+
+    LoginPresenter loginPresenter = new LoginPresenter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +46,13 @@ public class AActivityTwo extends BaseActivity {
     private void initView() {
         fab = findViewById(R.id.fab);
         cvAdd = findViewById(R.id.cv_add);
+        button = findViewById(R.id.bt_go);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginPresenter.requestChangeIP(ip.getText().toString(),port.getText().toString());
+            }
+        });
     }
 
     private void ShowEnterAnimation() {
@@ -115,5 +132,10 @@ public class AActivityTwo extends BaseActivity {
     @Override
     public void onBackPressed() {
         animateRevealClose();
+    }
+
+    @Override
+    public void onSuccess() {
+        showToast("OK");
     }
 }

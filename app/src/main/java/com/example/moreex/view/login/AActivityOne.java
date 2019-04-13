@@ -44,7 +44,8 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
         setListener();
         loginPresenter = new LoginPresenter(this);
 
-        showNotice("title","detail");
+        //请求公告
+        loginPresenter.requestNotice();
     }
 
     private void initView() {
