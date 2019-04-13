@@ -1,9 +1,12 @@
 package com.example.moreex.view.main;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 
+import android.support.v4.app.NotificationCompat;
 import android.transition.Explode;
 import android.widget.Toast;
 
@@ -24,16 +27,20 @@ public class MainActivity extends BaseActivity {
 
     SpaceTabLayout tabLayout;
     List<Fragment> fragmentList = new ArrayList<>();
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
         setAnime();
 
+        //初始化spaceTabLayout
         initSpaceTabLayout(savedInstanceState);
-
+        //rx请求
         requestPermissions();
+        //通知
     }
 
     private void setAnime(){

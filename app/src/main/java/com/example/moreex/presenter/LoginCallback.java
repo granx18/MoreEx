@@ -6,4 +6,6 @@ public interface LoginCallback extends BaseCallback {
     void onFailure();
 
     void onComplete();
+
+    void onSuccessNotice(String title,String detail);
 }

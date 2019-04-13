@@ -8,4 +8,6 @@ public interface IActivityOne extends BaseView {
     void showRightToast();
 
     void showWrongToast();
+
+    void onSuccessNotice(String title,String detail);
 }

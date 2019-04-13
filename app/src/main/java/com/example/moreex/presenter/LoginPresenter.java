@@ -20,14 +20,22 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
         loginModel.logining(cardId,password);
     }
 
+    public void requestNotice(){
+        //todo
+    }
+
+    public void requestChangeIP(String ip,String port){
+        //todo
+    }
+
     @Override
-    public void onSuccess(String data) {
+    public void onSuccess() {
         ((IActivityOne)getView()).showRightToast();
         ((IActivityOne)getView()).onSuccess();
     }
 
     @Override
-    public void onFailure(String msg) {
+    public void onFailure() {
         ((IActivityOne)getView()).showWrongToast();
     }
 
@@ -36,4 +44,8 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
         getView().hideLoading();
     }
 
+    @Override
+    public void onSuccessNotice(String title, String detail) {
+        ((IActivityOne)getView()).onSuccessNotice(title,detail);
+    }
 }

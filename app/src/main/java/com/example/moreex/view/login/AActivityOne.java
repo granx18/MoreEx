@@ -2,11 +2,14 @@ package com.example.moreex.view.login;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.CardView;
 import android.transition.Explode;
 import android.view.View;
@@ -29,6 +32,10 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
 
     private LoginPresenter loginPresenter;
 
+    //公告通知类
+    NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +43,9 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
         initView();
         setListener();
         loginPresenter = new LoginPresenter(this);
+
+        //请求公告
+        loginPresenter.requestNotice();
     }
 
     private void initView() {
@@ -125,4 +135,19 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
 
     }
 
+
+    public void showNotice(String title,String detail){
+        mBuilder.setContentTitle(title);
+        mBuilder.setContentText(detail);
+        Notification notification = mBuilder.build();
+        mBuilder.setDefaults(Notification.DEFAULT_SOUND);
+        mBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
+        mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
+        mNotificationManager.notify(1,notification);
+    }
+
+    @Override
+    public void onSuccessNotice(String title, String detail) {
+        showNotice(title,detail);
+    }
 }
