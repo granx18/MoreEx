@@ -158,11 +158,11 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
         }
 
         private class requestSportTypeInfoTask extends AsyncTask
-                <String,Integer, List<SportTypeInfo>>{
+                <String,Integer, SportTypeInfo>{
             @Override
-            protected List<SportTypeInfo> doInBackground(String... strings) {
+            protected SportTypeInfo doInBackground(String... strings) {
                 try {
-                    List<SportTypeInfo> result = BaseVariable.
+                    SportTypeInfo result = BaseVariable.
                             studentApi.getSportTypesInfo
                             (BaseVariable.sessionid);
                    return result;
@@ -182,11 +182,13 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
 
             @Override
             protected void onPostExecute
-                    (List<SportTypeInfo> list){
+                    (SportTypeInfo list){
                 super.onPostExecute(list);
-                if()
+                if(list==null)
                     ((Fragment1Callback)mCallback).
                             onFailureSportTypeInfo();
+                else
+                    ((Fragment1Callback)mCallback).onSuccessSportTypeInfo();
             }
         }
 
