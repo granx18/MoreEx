@@ -1,7 +1,7 @@
 package com.example.moreex.model;
 
 import android.os.AsyncTask;
-import android.util.Base64;
+import java.util.Base64;
 
 import com.example.moreex.presenter.BaseCallback;
 import com.example.moreex.presenter.LoginCallback;
@@ -41,7 +41,8 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
         try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             //加密后的字符串
-            String hashedPassword = Base64.getEncoder.encodeToString(md5.digest(str.getBytes("utf-8")));
+
+            String hashedPassword = Base64.getEncoder().encodeToString(md5.digest(str.getBytes("utf-8")));
             return hashedPassword;
         }catch (Exception e)
         {
@@ -72,8 +73,12 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            ((LoginCallback)mCallback).onSuccess("test");
-            ((LoginCallback)mCallback).onComplete();
+            if(BaseVariable.sessionid != null){
+                ((LoginCallback)mCallback).onSuccess();
+                ((LoginCallback)mCallback).onComplete();
+            }
+            else
+                ((LoginCallback)mCallback).onFailure();
         }
     }
 }

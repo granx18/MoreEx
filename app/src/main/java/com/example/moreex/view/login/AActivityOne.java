@@ -51,7 +51,7 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
             @Override
             public void onClick(View view) {
 //                showActivityThree();
-                loginPresenter.requestLogin("test");
+                loginPresenter.requestLogin(etUsername.getText().toString(),etPassword.getText().toString());
             }
         });
         fab.setOnClickListener(new View.OnClickListener() {
