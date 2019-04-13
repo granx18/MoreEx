@@ -5,6 +5,12 @@ import android.os.AsyncTask;
 import com.example.moreex.presenter.BaseCallback;
 import com.example.moreex.presenter.Fragment2Callback;
 
+import java.util.Comparator;
+import java.util.List;
+
+import io.swagger.client.model.ClassInfo;
+import io.swagger.client.model.StudentInfo;
+
 public class Fragment2Model <T extends BaseCallback>extends BaseModel {
     private T mCallback;
 
@@ -16,26 +22,41 @@ public class Fragment2Model <T extends BaseCallback>extends BaseModel {
         new TestTask().execute();
     }
 
-    private class TestTask extends AsyncTask<String,Integer,String> {
+    private class TestTask extends AsyncTask<String,Integer,String[]> {
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected String[] doInBackground(String... strings) {
             try{
-                Thread.sleep(1000);
+                List<ClassInfo> result = BaseVariable.
+                        studentApi.getClassesInfo(BaseVariable.sessionid);
+                if(result!=null)
+                {
+                   List<StudentInfo> studentInfosList=result.get(0).getStudents();
+                   studentInfosList.sort(new comparator());
+                   Integer size=studentInfosList.size();
+                   String []s=new String[size];
+                   for(int i=0;i<size;i++)
+                   s[i]=studentInfosList.get(i).getName();
+                    return s;
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }
-            return "test";
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String[] s) {
             super.onPostExecute(s);
-            String[] adapterData = new String[]{"Activity", "Service", "Content Provider", "Intent", "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient",
-                    "DDMS", "Android Studio", "Fragment", "Loader", "Activity", "Service", "Content Provider", "Intent",
-                    "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient", "Activity", "Service", "Content Provider", "Intent",
-                    "BroadcastReceiver", "ADT", "Sqlite3", "HttpClient"};
-            ((Fragment2Callback)mCallback).onSuccess(adapterData);
+            ((Fragment2Callback)mCallback).onSuccess(s);
+        }
+    }
+
+    private class comparator implements Comparator<StudentInfo> {
+
+        @Override
+        public int compare(StudentInfo o1, StudentInfo o2) {
+            return o1.getSportDays()-o2.getSportDays();
         }
     }
 }

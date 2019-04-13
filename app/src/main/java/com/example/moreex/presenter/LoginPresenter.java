@@ -39,6 +39,7 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
         ((IActivityOne)getView()).showWrongToast();
     }
 
+
     @Override
     public void onComplete() {
         getView().hideLoading();

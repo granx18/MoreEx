@@ -7,7 +7,6 @@ import com.example.moreex.presenter.BaseCallback;
 import com.example.moreex.presenter.Fragment1Callback;
 
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -54,8 +53,20 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
             @Override
             protected Boolean doInBackground(String...strings)
             {
-                //？？？？？？？？？？？
-                Integer planId = 56; // Integer ？？？？？？？？？？？？？
+                Integer planId=-1;
+                for(int i=0;i<BaseVariable.sportPlanInfoList.size();i++) {
+                    Date date = new Date(System.currentTimeMillis());
+                    if (date.after(BaseVariable.sportPlanInfoList.get(i).getStartTime())
+                    &&date.before(BaseVariable.sportPlanInfoList.get(i).getEndTime())
+                    &&BaseVariable.sportPlanInfoList.get(i).getCancelled()==false) {
+                        planId = BaseVariable.sportPlanInfoList.get(i).getPlanId();
+                    }
+                }
+                if(planId==-1) {
+                    System.err.println("Exception when " +
+                            "calling StudentApi#startSport");
+                    return Boolean.FALSE;
+                }
                 try {
                     Boolean result = BaseVariable.studentApi.startSport
                             (BaseVariable.sessionid, planId);
@@ -182,13 +193,15 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
 
             @Override
             protected void onPostExecute
-                    (SportTypeInfo list){
-                super.onPostExecute(list);
-                if(list==null)
+                    (SportTypeInfo sportType){
+                super.onPostExecute(sportType);
+                if(sportType==null)
                     ((Fragment1Callback)mCallback).
                             onFailureSportTypeInfo();
-                else
-                    ((Fragment1Callback)mCallback).onSuccessSportTypeInfo();
+                else {
+                    BaseVariable.sportTypeInfo=sportType;
+                    ((Fragment1Callback) mCallback).onSuccessSportTypeInfo();
+                }
             }
         }
 
