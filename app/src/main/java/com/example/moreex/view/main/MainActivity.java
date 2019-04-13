@@ -28,9 +28,7 @@ public class MainActivity extends BaseActivity {
     SpaceTabLayout tabLayout;
     List<Fragment> fragmentList = new ArrayList<>();
 
-    //公告通知类
-    NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,11 +120,5 @@ public class MainActivity extends BaseActivity {
         tabLayout.setVisibility(TabLayout.VISIBLE);
     }
 
-    public void showNotice(String title,String detail){
-        mBuilder.setContentTitle(title);
-        mBuilder.setContentText(detail);
-        Notification notification = mBuilder.build();
-        mNotificationManager.notify(1,notification);
-    }
-    
+
 }
