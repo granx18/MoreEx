@@ -20,15 +20,25 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
         loginModel.logining(cardId,password);
     }
 
-    @Override
+
     public void onSuccess(String data) {
         ((IActivityOne)getView()).showRightToast();
         ((IActivityOne)getView()).onSuccess();
     }
 
-    @Override
+
     public void onFailure(String msg) {
         ((IActivityOne)getView()).showWrongToast();
+    }
+
+    @Override
+        public void onSuccess() {
+
+    }
+
+    @Override
+    public void onFailure() {
+
     }
 
     @Override

@@ -14,6 +14,6 @@ public class BaseVariable {
     public static StudentApi studentApi=new StudentApi();
     public static SportTypeInfo sportTypeInfo=new SportTypeInfo();
     public static StudentInfo studentInfo=new StudentInfo();
-    public static ClassInfo classInfo=new ClassInfo();
+    public static List<ClassInfo> classInfo=new ArrayList<ClassInfo>();
     public static List<SportPlanInfo> sportPlanInfoList =new ArrayList<SportPlanInfo>();
 }
