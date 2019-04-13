@@ -1,7 +1,6 @@
 package com.example.moreex.model;
 
 import android.os.AsyncTask;
-import java.util.Base64;
 
 import com.example.moreex.presenter.BaseCallback;
 import com.example.moreex.presenter.LoginCallback;
@@ -9,9 +8,16 @@ import com.example.moreex.presenter.LoginCallback;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 import io.swagger.client.ApiException;
-import io.swagger.client.api.StudentApi;
+import io.swagger.client.model.ClassInfo;
+import io.swagger.client.model.SportPlanInfo;
+import io.swagger.client.model.SportTypeInfo;
+import io.swagger.client.model.StudentInfo;
 
 public class LoginModel <T extends BaseCallback>extends BaseModel {
     private T mCallback;
@@ -26,7 +32,7 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
     public void logining(String cardId,String password){
         this.cardId=cardId;
         this.password=password;
-        new TestTask().execute("test");
+        new LoginTask().execute("test");
     }
 
     /**利用MD5进行加密
@@ -50,9 +56,7 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
         }
        return null;
     }
-    private class TestTask extends AsyncTask<String,Integer,String>{
-
-
+    private class LoginTask extends AsyncTask<String,Integer,String>{
         @Override
         protected String doInBackground(String...strings) {
             try{
@@ -76,9 +80,58 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
             if(BaseVariable.sessionid != null){
                 ((LoginCallback)mCallback).onSuccess();
                 ((LoginCallback)mCallback).onComplete();
+                //登陆成功，查询基本信息表并保存
+                new executeRequteBaseStudentInfoTask().execute();
             }
             else
                 ((LoginCallback)mCallback).onFailure();
+        }
+    }
+
+    private class executeRequteBaseStudentInfoTask
+            extends AsyncTask<String,Integer,String>
+    {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                List<SportPlanInfo> sportPlanInfoResult = BaseVariable.studentApi.
+                        getSportPlansInfo(BaseVariable.sessionid);
+                if(sportPlanInfoResult!=null)
+                    BaseVariable.sportPlanInfoList=sportPlanInfoResult;
+
+                List<ClassInfo> ClassInfoResult = BaseVariable.
+                        studentApi.getClassesInfo(BaseVariable.sessionid);
+                if(ClassInfoResult!=null)
+                    BaseVariable.classInfo=ClassInfoResult;
+
+                StudentInfo StudentInfoResult = BaseVariable.studentApi.
+                        getStudentInfo(BaseVariable.sessionid);
+                if(StudentInfoResult!=null)
+                    BaseVariable.studentInfo=StudentInfoResult;
+
+                SportTypeInfo SportTypeInfoResult =
+                        BaseVariable.studentApi.getSportTypesInfo(BaseVariable.sessionid);
+                if(SportTypeInfoResult!=null)
+                    BaseVariable.sportTypeInfo=SportTypeInfoResult;
+
+            } catch (ApiException e) {
+                System.err.println("Exception when calling StudentApi#get student base information");
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s)
+        {
+
         }
     }
 }
