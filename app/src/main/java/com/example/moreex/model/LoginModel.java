@@ -84,7 +84,6 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
             super.onPostExecute(s);
             if(BaseVariable.sessionid != null){
                 ((LoginCallback)mCallback).onSuccess();
-                ((LoginCallback)mCallback).onComplete();
                 //登陆成功，查询基本信息表并保存
                 new executeRequteBaseStudentInfoTask().execute();
             }

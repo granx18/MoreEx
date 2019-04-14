@@ -55,6 +55,7 @@
                 <EditText
                     android:textSize="18sp"
                     android:hint="@string/Username"
+                    android:text="10003"
                     android:textColor="#2fa881"
                     android:id="@+id/et_username"
                     android:layout_width="match_parent"
@@ -79,6 +80,7 @@
                     <EditText
                         android:textSize="18sp"
                         android:hint="@string/Password"
+                        android:text="123456"
                         android:textColor="#2fa881"
                         android:id="@+id/et_password"
                         android:layout_width="match_parent"

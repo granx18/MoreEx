@@ -140,5 +140,6 @@ public class AActivityTwo extends BaseActivity implements IActivityTwo{
     @Override
     public void onSuccess() {
         showToast("OK");
+        animateRevealClose();
     }
 }
