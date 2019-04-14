@@ -12,15 +12,16 @@
 
 package io.swagger.client.model;
 
-import java.util.Date;
-import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "")
 public class TracePoint {
   
   @SerializedName("time")
-  private Date time = null;
+  private Long time = null;
   @SerializedName("latitude")
   private Double latitude = null;
   @SerializedName("longitude")
@@ -30,10 +31,10 @@ public class TracePoint {
    * 时间点
    **/
   @ApiModelProperty(required = true, value = "时间点")
-  public Date getTime() {
+  public Long getTime() {
     return time;
   }
-  public void setTime(Date time) {
+  public void setTime(Long time) {
     this.time = time;
   }
 

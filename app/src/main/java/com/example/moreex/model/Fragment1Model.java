@@ -6,7 +6,6 @@ import com.amap.api.maps.model.LatLng;
 import com.example.moreex.presenter.BaseCallback;
 import com.example.moreex.presenter.Fragment1Callback;
 
-import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -32,7 +31,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
         TracePoint point=new TracePoint();
         point.setLatitude(latLng.latitude);
         point.setLongitude(latLng.longitude);
-        point.setTime(new Date(System.currentTimeMillis()));
+        point.setTime(System.currentTimeMillis());
         task.execute(point);
     }
 
@@ -55,9 +54,9 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
             {
                 Integer planId=-1;
                 for(int i=0;i<BaseVariable.sportPlanInfoList.size();i++) {
-                    Date date = new Date(System.currentTimeMillis());
-                    if (date.after(BaseVariable.sportPlanInfoList.get(i).getStartTime())
-                    &&date.before(BaseVariable.sportPlanInfoList.get(i).getEndTime())
+                   long naotime=System.currentTimeMillis();
+                    if (naotime>=BaseVariable.sportPlanInfoList.get(i).getStartTime()
+                    &&naotime<=BaseVariable.sportPlanInfoList.get(i).getEndTime()
                     &&BaseVariable.sportPlanInfoList.get(i).getCancelled()==false) {
                         planId = BaseVariable.sportPlanInfoList.get(i).getPlanId();
                     }
@@ -69,7 +68,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                 }
                 try {
                     Boolean result = BaseVariable.studentApi.startSport
-                            (BaseVariable.sessionid, planId);
+                            (BaseVariable.sessionid, planId).getResult();
                    return result;
                 } catch (ApiException e) {
                     System.err.println("Exception when " +
@@ -104,7 +103,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                 TracePoint point = para[0]; // TracePoint |
                 try {
                     Boolean result = BaseVariable.studentApi.
-                            submitTracePoint(BaseVariable.sessionid, point);
+                            submitTracePoint(BaseVariable.sessionid, point).getResult();
                     System.out.println(result);
                 } catch (ApiException e) {
                     System.err.println("Exception when calling " +
@@ -139,7 +138,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
             protected Boolean doInBackground(String... strings) {
                 try {
                     Boolean result = BaseVariable.studentApi.
-                            endSport(BaseVariable.sessionid);
+                            endSport(BaseVariable.sessionid).getResult();
                     System.out.println(result);
                 } catch (ApiException e) {
                     System.err.println("Exception when " +
