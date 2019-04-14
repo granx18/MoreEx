@@ -37,8 +37,8 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
     private LoginPresenter loginPresenter;
 
     //公告通知类
-    NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+    NotificationManager mNotificationManager;
+    NotificationCompat.Builder mBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +141,11 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
 
 
     public void showNotice(String title,String detail){
+        //公告通知类
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        mBuilder = new NotificationCompat.Builder(this);
+
+
         mBuilder.setContentTitle(title);
         mBuilder.setContentText(detail);
         Notification notification = mBuilder.build();

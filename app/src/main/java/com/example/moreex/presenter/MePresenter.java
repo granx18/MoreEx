@@ -8,10 +8,9 @@ import io.swagger.client.model.SportTypeInfo;
 import io.swagger.client.model.StudentInfo;
 
 public class MePresenter extends BasePresenter implements MeCallback {
-    private MeModel meModel;
-    public MePresenter(BaseView view,MeModel meModel) {
+    private MeModel meModel = new MeModel(this);
+    public MePresenter(BaseView view) {
         super(view);
-        this.meModel=meModel;
     }
 
     public void requestStuInfo(){
