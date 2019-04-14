@@ -3,6 +3,7 @@ package com.example.moreex.presenter;
 import com.example.moreex.model.LoginModel;
 import com.example.moreex.view.BaseView;
 import com.example.moreex.view.login.IActivityOne;
+import com.example.moreex.view.login.IActivityTwo;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
 
     public void requestNotice(){
         //todo
+        loginModel.executeRequestNotice();
     }
 
     public void requestChangeIP(String ip,String port){
@@ -37,11 +39,13 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
     public void onSuccess() {
         ((IActivityOne)getView()).showRightToast();
         ((IActivityOne)getView()).onSuccess();
+        onComplete();
     }
 
     @Override
     public void onFailure() {
         ((IActivityOne)getView()).showWrongToast();
+        onComplete();
     }
 
 
@@ -53,5 +57,10 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
     @Override
     public void onSuccessNotice(List<Notice> list) {
         ((IActivityOne)getView()).onSuccessNotice(list);
+    }
+
+    @Override
+    public void onSuccessChangeIP() {
+        ((IActivityTwo)getView()).onSuccess();
     }
 }

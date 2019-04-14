@@ -32,4 +32,5 @@ public class Fragment3Presenter extends BasePresenter implements Fragment3Callba
         getView().showToast("更改密码成功，重新登录");
         ((IFragment3)getView()).onSuccessChangePwd();
     }
+
 }

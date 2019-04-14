@@ -143,6 +143,7 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
     public void executeRequestChangeIP(String ip,String port)
     {
         BaseVariable.studentApi.setBasePath("http://"+ip+":"+port);
+        ((LoginCallback)mCallback).onSuccessChangeIP();
     }
 
     public void executeRequestNotice()
