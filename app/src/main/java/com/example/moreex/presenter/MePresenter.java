@@ -1,5 +1,6 @@
 package com.example.moreex.presenter;
 
+import com.example.moreex.model.MeModel;
 import com.example.moreex.view.BaseView;
 import com.example.moreex.view.main.Me;
 
@@ -7,16 +8,20 @@ import io.swagger.client.model.SportTypeInfo;
 import io.swagger.client.model.StudentInfo;
 
 public class MePresenter extends BasePresenter implements MeCallback {
-    public MePresenter(BaseView view) {
+    private MeModel meModel;
+    public MePresenter(BaseView view,MeModel meModel) {
         super(view);
+        this.meModel=meModel;
     }
 
     public void requestStuInfo(){
         //todo
+        meModel.executeRequestStuInfo();
     }
 
     public void requestSportTypeInfo(){
         //todo
+        meModel.executeRequestSportTypeInfo();
     }
 
     @Override

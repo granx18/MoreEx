@@ -4,6 +4,10 @@ import com.example.moreex.model.LoginModel;
 import com.example.moreex.view.BaseView;
 import com.example.moreex.view.login.IActivityOne;
 
+import java.util.List;
+
+import io.swagger.client.model.Notice;
+
 public class LoginPresenter extends BasePresenter implements LoginCallback{
 
     private LoginModel loginModel;
@@ -26,6 +30,7 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
 
     public void requestChangeIP(String ip,String port){
         //todo
+        loginModel.executeRequestChangeIP(ip,port);
     }
 
     @Override
@@ -46,7 +51,7 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
     }
 
     @Override
-    public void onSuccessNotice(String title, String detail) {
-        ((IActivityOne)getView()).onSuccessNotice(title,detail);
+    public void onSuccessNotice(List<Notice> list) {
+        ((IActivityOne)getView()).onSuccessNotice(list);
     }
 }

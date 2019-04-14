@@ -11,6 +11,7 @@ import io.swagger.client.model.StudentInfo;
 
 public class BaseVariable {
     public static String  sessionid;
+    public static String password;
     public static StudentApi studentApi=new StudentApi();
     public static SportTypeInfo sportTypeInfo=new SportTypeInfo();
     public static StudentInfo studentInfo=new StudentInfo();

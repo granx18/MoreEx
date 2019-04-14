@@ -22,6 +22,10 @@ import com.example.moreex.presenter.LoginPresenter;
 import com.example.moreex.view.BaseActivity;
 import com.example.moreex.view.main.MainActivity;
 
+import java.util.List;
+
+import io.swagger.client.model.Notice;
+
 public class AActivityOne extends BaseActivity implements IActivityOne{
 
     private EditText etUsername;
@@ -147,7 +151,9 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
     }
 
     @Override
-    public void onSuccessNotice(String title, String detail) {
-        showNotice(title,detail);
+    public void onSuccessNotice(List<Notice> list) {
+        for(Notice i : list){
+            showNotice(i.getTitle(),i.getDetail());
+        }
     }
 }
