@@ -95,6 +95,13 @@ public class Fragment3 extends Fragment implements IFragment3{
                             .show();
                     break;
                 }
+                case 3:{
+                    Intent intent = new Intent(getContext(),About.class);
+                    startActivity(intent);
+                    break;
+                }
+                default:
+                    break;
             }
         }
     }

@@ -30,18 +30,19 @@ public class About extends BaseActivity {
 
                 .addGroup("suiyueliushang")
                 .addEmail("2837644648@qq.com")
-                .addTwitter("suiyueliushang")
+                .addTwitter("suiyueliushang","suiyueliushang")
                 .addItem(getQQElement("2837644648"))
 
                 .addGroup("Acac1a")
                 .addEmail("729354837@qq.com")
-                .addTwitter("Granx18")
+                .addTwitter("Granx18","Granx18")
                 .addItem(getQQElement("729354837"))
 
                 .addGroup("特别感谢")
                 .addGitHub("https://github.com/long1eu/SpaceTabLayout","SpaceTabLayout")
                 .addGitHub("https://github.com/Frank-Zhu/PullZoomView","PullZoomView")
                 .addGitHub("https://github.com/markushi/android-circlebutton","CircleButton")
+                .addTwitter("rt_921","ryoga")
 
                 .create();
         setContentView(aboutPage);
