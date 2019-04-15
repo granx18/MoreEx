@@ -31,8 +31,11 @@ import com.example.moreex.presenter.Fragment1Presenter;
 import com.example.moreex.view.BaseActivity;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import at.markushi.ui.CircleButton;
+import io.swagger.client.model.TracePoint;
 
 
 /**
@@ -197,12 +200,24 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
             }
         }
     }
-
+    //恢复轨迹点
+    private void resumeReDrawLine(List<TracePoint> list){
+        List<LatLng>latLngs = new ArrayList<>();
+        for(TracePoint tracePoint:list){
+            latLngs.add(new LatLng(tracePoint.getLatitude(),tracePoint.getLongitude()));
+        }
+        mpolyline = aMap.addPolyline(new PolylineOptions().addAll(mPolyoptions.getPoints()).width(10f).color(Color.GRAY));
+    }
+    private void resumeReDrawLine(){
+        if(mPolyoptions.getPoints().size()>1){
+            mpolyline = aMap.addPolyline(new PolylineOptions().addAll(mPolyoptions.getPoints()).width(10f).color(Color.GRAY));
+        }
+    }
 
     public int RECORD_TIMES = 0;
     public void submitPerFive(LatLng myLocation){
         RECORD_TIMES++;
-        if(RECORD_TIMES==5){
+        if(RECORD_TIMES==1){
             presenter.requestSubmitTracePoint(myLocation);
             RECORD_TIMES = 0;
         }
@@ -347,12 +362,13 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
 
     }
 
-    //用于修复按钮颜色bug
+    //用于修复按钮颜色bug和修复轨迹
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser)
             resumeButtonColor();
+        resumeReDrawLine();
     }
 
     @Override
@@ -365,4 +381,8 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
         mStartTime = System.currentTimeMillis()-distance;
     }
 
+    @Override
+    public void onSuccessResumeReDrawLine(List<TracePoint> list) {
+        resumeReDrawLine(list);
+    }
 }

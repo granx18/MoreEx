@@ -5,6 +5,10 @@ import com.example.moreex.model.Fragment1Model;
 import com.example.moreex.view.BaseView;
 import com.example.moreex.view.main.IFragment1;
 
+import java.util.List;
+
+import io.swagger.client.model.TracePoint;
+
 public class Fragment1Presenter extends BasePresenter implements Fragment1Callback {
     private Fragment1Model fragment1Model;
 
@@ -32,14 +36,6 @@ public class Fragment1Presenter extends BasePresenter implements Fragment1Callba
     public void requestSportTypeInfo(){
         //todo
         fragment1Model.executeRerequestSportTypeInfoTask();
-    }
-
-    public void requestResumeMiles(){
-        //todo
-    }
-
-    public void requestResumeTime(){
-        //todo
     }
 
     //结合Model返回的数据进行操作
@@ -96,12 +92,17 @@ public class Fragment1Presenter extends BasePresenter implements Fragment1Callba
     @Override
     //distance m
     public void onSuccessResumeMiles(double distance) {
-        onSuccessResumeMiles(distance);
+        ((IFragment1)getView()).onSuccessResumeMiles(distance);
     }
 
     @Override
     //distance millSeconds
     public void onSuccessResumeTime(long distance) {
-        onSuccessResumeTime(distance);
+        ((IFragment1)getView()).onSuccessResumeTime(distance);
+    }
+
+    @Override
+    public void onSuccessResumeReDrawLine(List<TracePoint> list) {
+        ((IFragment1)getView()).onSuccessResumeReDrawLine(list);
     }
 }
