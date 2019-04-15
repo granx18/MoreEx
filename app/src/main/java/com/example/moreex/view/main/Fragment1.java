@@ -209,7 +209,7 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
         mpolyline = aMap.addPolyline(new PolylineOptions().addAll(mPolyoptions.getPoints()).width(10f).color(Color.GRAY));
     }
     private void resumeReDrawLine(){
-        if(mPolyoptions.getPoints().size()>1){
+        if(mPolyoptions!=null && mPolyoptions.getPoints().size()>1){
             mpolyline = aMap.addPolyline(new PolylineOptions().addAll(mPolyoptions.getPoints()).width(10f).color(Color.GRAY));
         }
     }
@@ -366,9 +366,10 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser)
+        if (isVisibleToUser) {
             resumeButtonColor();
-        resumeReDrawLine();
+            resumeReDrawLine();
+        }
     }
 
     @Override

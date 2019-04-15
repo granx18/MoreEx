@@ -21,7 +21,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
 
     public Fragment1Model(T mCallback) {
         this.mCallback = mCallback;
-        meModel=new MeModel((BaseCallback) this);
+        meModel=new MeModel(mCallback);
         planId=-1;
     }
 
@@ -68,6 +68,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                         }
                         ((Fragment1Callback)mCallback).onSuccessResumeTime(time);
                         ((Fragment1Callback)mCallback).onSuccessResumeMiles(distance);
+                        ((Fragment1Callback)mCallback).onSuccessResumeReDrawLine(result);
                     } catch (TimeoutException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
