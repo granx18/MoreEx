@@ -33,6 +33,7 @@ public class MeModel <T extends BaseCallback> extends BaseModel {
                         studentApi.getStudentInfo(BaseVariable.sessionid);
                 if(result!=null)
                     BaseVariable.studentInfo=result;
+                return result;
             } catch (ApiException e) {
                 System.err.println("Exception when calling StudentApi#getStudentInfo");
                 e.printStackTrace();

@@ -12,7 +12,6 @@
 
 package io.swagger.client.model;
 
-import java.util.Date;
 import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
 
@@ -20,7 +19,7 @@ import com.google.gson.annotations.SerializedName;
 public class Notice {
   
   @SerializedName("time")
-  private Date time = null;
+  private Long time = null;
   @SerializedName("title")
   private String title = null;
   @SerializedName("detail")
@@ -30,10 +29,10 @@ public class Notice {
    * 时间
    **/
   @ApiModelProperty(value = "时间")
-  public Date getTime() {
+  public Long getTime() {
     return time;
   }
-  public void setTime(Date time) {
+  public void setTime(Long time) {
     this.time = time;
   }
 

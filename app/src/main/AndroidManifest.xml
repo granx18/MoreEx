@@ -17,13 +17,15 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/rounded_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".view.main.Me"></activity>
+        <activity android:name=".view.main.About"></activity>
+        <activity android:name=".view.main.Me" />
         <activity android:name=".view.login.AActivityOne">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,11 +36,11 @@
         <activity
             android:name=".view.login.AActivityTwo"
             android:theme="@style/Translucent" />
-        <activity android:name=".view.main.MainActivity" />
+        <activity android:name=".view.main.MainActivity"></activity>
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="a007ca575725401767b52e9dbb3e3c10"></meta-data>
+            android:value="a007ca575725401767b52e9dbb3e3c10" />
 
         <service android:name="com.amap.api.location.APSService" />
     </application>

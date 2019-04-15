@@ -57,18 +57,18 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
         }
        return null;
     }
-    private class LoginTask extends AsyncTask<String,Integer,String>{
+    private class LoginTask extends AsyncTask<String,Integer,Boolean>{
         @Override
-        protected String doInBackground(String...strings) {
+        protected Boolean doInBackground(String...strings) {
             try{
                 String hashedPassword=EncoderByMd5(password);
                 try {
-                    BaseVariable.sessionid = BaseVariable.studentApi.login(cardId, hashedPassword);
-                    if(BaseVariable.sessionid!=null)
+                    BaseVariable.sessionid = BaseVariable.studentApi.login(cardId, hashedPassword).getSessionid();
+                    if(BaseVariable.sessionid!=null||BaseVariable.sessionid.length()>10)
                     {
                         BaseVariable.password=password;
+                        return true;
                     }
-                    return  BaseVariable.sessionid;
                 } catch (ApiException e) {
                     System.err.println("Exception when calling StudentApi#login");
                     e.printStackTrace();
@@ -76,15 +76,14 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
             }catch (Exception e){
                 e.printStackTrace();
             }
-            return null;
+            return false;
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(Boolean s) {
             super.onPostExecute(s);
             if(BaseVariable.sessionid != null){
                 ((LoginCallback)mCallback).onSuccess();
-                ((LoginCallback)mCallback).onComplete();
                 //登陆成功，查询基本信息表并保存
                 new executeRequteBaseStudentInfoTask().execute();
             }
@@ -143,6 +142,7 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
     public void executeRequestChangeIP(String ip,String port)
     {
         BaseVariable.studentApi.setBasePath("http://"+ip+":"+port);
+        ((LoginCallback)mCallback).onSuccessChangeIP();
     }
 
     public void executeRequestNotice()

@@ -12,4 +12,6 @@ public interface LoginCallback extends BaseCallback {
     void onComplete();
 
     void onSuccessNotice(List<Notice> list);
+
+    void onSuccessChangeIP();
 }

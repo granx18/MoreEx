@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.moreex.R;
 import com.example.moreex.presenter.LoginPresenter;
@@ -33,12 +34,13 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
     private Button btGo;
     private CardView cv;
     private FloatingActionButton fab;
+    private TextView textView;
 
     private LoginPresenter loginPresenter;
 
     //公告通知类
-    NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+    NotificationManager mNotificationManager;
+    NotificationCompat.Builder mBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
         btGo = findViewById(R.id.bt_go);
         cv = findViewById(R.id.cv);
         fab = findViewById(R.id.fab);
+        textView = findViewById(R.id.forgot_pwd_textView);
     }
 
     private void setListener() {
@@ -72,6 +75,12 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
             @Override
             public void onClick(View view) {
                 showActivityTwo();
+            }
+        });
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showToast("请联系学校修改密码");
             }
         });
     }
@@ -141,6 +150,11 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
 
 
     public void showNotice(String title,String detail){
+        //公告通知类
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        mBuilder = new NotificationCompat.Builder(this);
+
+
         mBuilder.setContentTitle(title);
         mBuilder.setContentText(detail);
         Notification notification = mBuilder.build();

@@ -31,8 +31,11 @@ import com.example.moreex.presenter.Fragment1Presenter;
 import com.example.moreex.view.BaseActivity;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import at.markushi.ui.CircleButton;
+import io.swagger.client.model.TracePoint;
 
 
 /**
@@ -103,9 +106,11 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
             @Override
             public void onClick(View v) {
                 if(!BUTTON_STATE_PLAY){
+                    //请求开始
                     presenter.requestStartSport();
                 }
                 else{
+                    //请求结束
                     presenter.requestEndSport();
                 }
             }
@@ -195,12 +200,24 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
             }
         }
     }
-
+    //恢复轨迹点
+    private void resumeReDrawLine(List<TracePoint> list){
+        List<LatLng>latLngs = new ArrayList<>();
+        for(TracePoint tracePoint:list){
+            latLngs.add(new LatLng(tracePoint.getLatitude(),tracePoint.getLongitude()));
+        }
+        mpolyline = aMap.addPolyline(new PolylineOptions().addAll(mPolyoptions.getPoints()).width(10f).color(Color.GRAY));
+    }
+    private void resumeReDrawLine(){
+        if(mPolyoptions!=null && mPolyoptions.getPoints().size()>1){
+            mpolyline = aMap.addPolyline(new PolylineOptions().addAll(mPolyoptions.getPoints()).width(10f).color(Color.GRAY));
+        }
+    }
 
     public int RECORD_TIMES = 0;
     public void submitPerFive(LatLng myLocation){
         RECORD_TIMES++;
-        if(RECORD_TIMES==5){
+        if(RECORD_TIMES==1){
             presenter.requestSubmitTracePoint(myLocation);
             RECORD_TIMES = 0;
         }
@@ -325,11 +342,9 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
         mLocationClient.enableBackgroundLocation(2333,getSelfActivity().buildMapNotification());
 
         //位置时间初始化
-        textViewMiles.setText("路程/m\n"+0);
-        textViewTime.setText("时间/s\n"+0/1000);
+        textViewMiles.setText("路程/m\n"+String.format("%.2f", betweenDistance));
+        textViewTime.setText("时间/s\n"+(mCurrentTime-mStartTime)/1000);
         myLastLocation = null;
-        betweenDistance = 0;
-        mStartTime = System.currentTimeMillis();
 
         //轨迹
         if(mpolyline!=null)
@@ -347,11 +362,28 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
 
     }
 
-    //用于修复按钮颜色bug
+    //用于修复按钮颜色bug和修复轨迹
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser)
+        if (isVisibleToUser) {
             resumeButtonColor();
+            resumeReDrawLine();
+        }
+    }
+
+    @Override
+    public void onSuccessResumeMiles(double distance) {
+        betweenDistance = distance;
+    }
+
+    @Override
+    public void onSuccessResumeTime(long distance) {
+        mStartTime = System.currentTimeMillis()-distance;
+    }
+
+    @Override
+    public void onSuccessResumeReDrawLine(List<TracePoint> list) {
+        resumeReDrawLine(list);
     }
 }

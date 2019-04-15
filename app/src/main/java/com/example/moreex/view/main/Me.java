@@ -1,6 +1,5 @@
 package com.example.moreex.view.main;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -72,7 +71,7 @@ public class Me extends BaseActivity {
     }
 
     public void setStudentInfo(StudentInfo studentInfo) {
-        this.studentInfo = studentInfo;
+        this.studentInfo =studentInfo ;
     }
 
     public void setSportTypeInfo(SportTypeInfo sportTypeInfo) {

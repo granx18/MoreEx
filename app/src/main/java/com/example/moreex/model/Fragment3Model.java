@@ -30,7 +30,7 @@ public class Fragment3Model <T extends BaseCallback>extends BaseModel {
         protected Boolean doInBackground(String... strings) {
             try {
                 Boolean result = BaseVariable.studentApi.
-                        changePassword(BaseVariable.sessionid, BaseVariable.password, strings[0]);
+                        changePassword(BaseVariable.sessionid, BaseVariable.password, strings[0]).getResult();
                 if(result==true)
                     BaseVariable.password=strings[0];
                 return result;

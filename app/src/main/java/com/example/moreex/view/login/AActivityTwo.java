@@ -24,8 +24,8 @@ public class AActivityTwo extends BaseActivity implements IActivityTwo{
     private CardView cvAdd;
     private Button button;
 
-    private EditText ip = findViewById(R.id.ip);
-    private EditText port = findViewById(R.id.port);
+    private EditText ip;
+    private EditText port;
 
     LoginPresenter loginPresenter = new LoginPresenter(this);
 
@@ -41,6 +41,9 @@ public class AActivityTwo extends BaseActivity implements IActivityTwo{
                 animateRevealClose();
             }
         });
+
+        ip = findViewById(R.id.ip);
+        port = findViewById(R.id.port);
     }
 
     private void initView() {
@@ -137,5 +140,6 @@ public class AActivityTwo extends BaseActivity implements IActivityTwo{
     @Override
     public void onSuccess() {
         showToast("OK");
+        animateRevealClose();
     }
 }
