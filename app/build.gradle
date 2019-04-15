@@ -53,4 +53,5 @@ dependencies {
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
     // https://mvnrepository.com/artifact/io.swagger/swagger-annotations
     implementation group: 'io.swagger', name: 'swagger-annotations', version: '1.5.22'
+    implementation 'com.github.medyo:android-about-page:1.2.5'
 }

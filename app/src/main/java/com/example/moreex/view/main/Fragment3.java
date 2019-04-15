@@ -47,7 +47,7 @@ public class Fragment3 extends Fragment implements IFragment3{
         View view = inflater.inflate(R.layout.fragment3, container, false);
         listView = view.findViewById(R.id.listview_options);
 
-        String[] adapterData = new String[]{"我","更改个人封面","更改密码","关于","感谢"};
+        String[] adapterData = new String[]{"我","更改个人封面","更改密码","关于"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getSelfActivity()
                  ,android.R.layout.simple_list_item_1,adapterData);
         listView.setAdapter(adapter);
@@ -114,7 +114,7 @@ public class Fragment3 extends Fragment implements IFragment3{
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     String picturePath = cursor.getString(columnIndex);
-                    //todo 上传图片
+                    //上传图片
                     Bitmap bm = BitmapFactory.decodeFile(picturePath);
                     fragment3Presenter.requestChangePicture(bm);
                     cursor.close();
