@@ -6,6 +6,7 @@ import com.amap.api.maps.model.LatLng;
 import com.example.moreex.presenter.BaseCallback;
 import com.example.moreex.presenter.Fragment1Callback;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -15,10 +16,15 @@ import io.swagger.client.model.TracePoint;
 
 public class Fragment1Model<T extends BaseCallback> extends BaseModel {
     private T mCallback;
+    private MeModel meModel;
+    private Integer planId;
 
     public Fragment1Model(T mCallback) {
         this.mCallback = mCallback;
+        meModel=new MeModel((BaseCallback) this);
+        planId=-1;
     }
+
 
     public void executeRequestStartSport()
     {
@@ -51,36 +57,56 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
             @Override
             protected Boolean doInBackground(String...strings)
             {
-                Integer planId=-1;
-                long time=System.currentTimeMillis();
-                for(int i=0;i<BaseVariable.sportPlanInfoList.size();i++) {
-                    if (time>=BaseVariable.sportPlanInfoList.get(i).getStartTime()
-                    &&time<=BaseVariable.sportPlanInfoList.get(i).getEndTime()
-                    &&BaseVariable.sportPlanInfoList.get(i).getCancelled()==false
-                    &&BaseVariable.studentInfo.getPresentSportRecordId()==-1) {
-                        planId = BaseVariable.sportPlanInfoList.get(i).getPlanId();
+                meModel.executeRequestStuInfo();
+                if (BaseVariable.studentInfo.getPresentSportRecordId() != -1) {
+                    try {
+                        List<TracePoint> result = BaseVariable.studentApi.getTrace(BaseVariable.sessionid, planId);
+                        long time=result.get(result.size()).getTime()-result.get(0).getTime();
+                        double distance=0;
+                        for(int i=1;i<result.size();i++){
+                            distance+=result.get(i).LengthFromM((result.get((i-1))));
+                        }
+
+                    } catch (TimeoutException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ApiException e) {
+                        e.printStackTrace();
                     }
                 }
-                if(planId==-1) {
-                    System.err.println("Exception when " +
-                            "calling StudentApi#startSport");
-                    return Boolean.FALSE;
-                }
-                try {
-                    Boolean result = BaseVariable.studentApi.startSport
-                            (BaseVariable.sessionid, planId).getResult();
-                   return result;
-                } catch (ApiException e) {
-                    System.err.println("Exception when " +
-                            "calling StudentApi#startSport");
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (TimeoutException e) {
-                    e.printStackTrace();
-                }
+
+                    long time = System.currentTimeMillis();
+                    for (int i = 0; i < BaseVariable.sportPlanInfoList.size(); i++) {
+                        if (time >= BaseVariable.sportPlanInfoList.get(i).getStartTime()
+                                && time <= BaseVariable.sportPlanInfoList.get(i).getEndTime()
+                                && BaseVariable.sportPlanInfoList.get(i).getCancelled() == false) {
+                            planId = BaseVariable.sportPlanInfoList.get(i).getPlanId();
+                        }
+                    }
+                    if (planId == -1) {
+                        System.err.println("Exception when " +
+                                "calling StudentApi#startSport");
+                        return Boolean.FALSE;
+                    }
+                    try {
+                        Boolean result = BaseVariable.studentApi.startSport
+                                (BaseVariable.sessionid, planId).getResult();
+                        return result;
+                    } catch (ApiException e) {
+                        System.err.println("Exception when " +
+                                "calling StudentApi#startSport");
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (TimeoutException e) {
+                        e.printStackTrace();
+                    }
+
                 return null;
             }
 
@@ -102,6 +128,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
             @Override
             protected Boolean doInBackground(TracePoint ...para) {
                 TracePoint point = para[0]; // TracePoint |
+
                 try {
                     Boolean result = BaseVariable.studentApi.
                             submitTracePoint(BaseVariable.sessionid, point).getResult();

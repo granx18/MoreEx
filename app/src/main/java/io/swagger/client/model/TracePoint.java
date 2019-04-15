@@ -95,4 +95,19 @@ public class TracePoint {
     sb.append("}\n");
     return sb.toString();
   }
+
+  public double LengthFromM(TracePoint from)
+  {
+    double R = 6371000d;
+    double lat1 = latitude;
+    double lon1 = longitude;
+    double lat2 = from.latitude;
+    double lon2 = from.longitude;
+    double p = Math.PI / 180;
+    double a = 0.5 - Math.cos((lat2 - lat1) * p) / 2 +
+            Math.cos(lat1 * p) * Math.cos(lat2 * p) *
+                    (1 - Math.cos((lon2 - lon1) * p)) / 2;
+    return 2d * R * Math.asin(Math.sqrt(a));
+  }
+
 }
