@@ -34,14 +34,6 @@ public class Fragment1Presenter extends BasePresenter implements Fragment1Callba
         fragment1Model.executeRerequestSportTypeInfoTask();
     }
 
-    public void requestResumeMiles(){
-        //todo
-    }
-
-    public void requestResumeTime(){
-        //todo
-    }
-
     //结合Model返回的数据进行操作
     @Override
     public void onSuccessStartSport() {
