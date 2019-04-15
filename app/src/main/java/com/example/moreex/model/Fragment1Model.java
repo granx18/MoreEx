@@ -66,7 +66,8 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                         for(int i=1;i<result.size();i++){
                             distance+=result.get(i).LengthFromM((result.get((i-1))));
                         }
-
+                        ((Fragment1Callback)mCallback).onSuccessResumeTime(time);
+                        ((Fragment1Callback)mCallback).onSuccessResumeMiles(distance);
                     } catch (TimeoutException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
@@ -76,8 +77,9 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                     } catch (ApiException e) {
                         e.printStackTrace();
                     }
+                    return true;
                 }
-
+                else {
                     long time = System.currentTimeMillis();
                     for (int i = 0; i < BaseVariable.sportPlanInfoList.size(); i++) {
                         if (time >= BaseVariable.sportPlanInfoList.get(i).getStartTime()
@@ -106,7 +108,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                     } catch (TimeoutException e) {
                         e.printStackTrace();
                     }
-
+                }
                 return null;
             }
 
@@ -128,7 +130,10 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
             @Override
             protected Boolean doInBackground(TracePoint ...para) {
                 TracePoint point = para[0]; // TracePoint |
-
+                int i=0;
+                for(;i<BaseVariable.sportPlanInfoList.size()&&BaseVariable.sportPlanInfoList.get(i).getPlanId()!=planId;i++);
+                    if(point.getTime()>=BaseVariable.sportPlanInfoList.get(i).getEndTime())
+                        executeRequestEndSport();
                 try {
                     Boolean result = BaseVariable.studentApi.
                             submitTracePoint(BaseVariable.sessionid, point).getResult();
