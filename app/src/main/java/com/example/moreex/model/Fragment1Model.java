@@ -12,16 +12,15 @@ import java.util.concurrent.TimeoutException;
 
 import io.swagger.client.ApiException;
 import io.swagger.client.model.SportTypeInfo;
+import io.swagger.client.model.StudentInfo;
 import io.swagger.client.model.TracePoint;
 
 public class Fragment1Model<T extends BaseCallback> extends BaseModel {
     private T mCallback;
-    private MeModel meModel;
     private Integer planId;
 
     public Fragment1Model(T mCallback) {
         this.mCallback = mCallback;
-        meModel=new MeModel(mCallback);
         planId=-1;
     }
 
@@ -57,7 +56,23 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
             @Override
             protected Boolean doInBackground(String...strings)
             {
-                meModel.executeRequestStuInfo();
+                StudentInfo tempResult = null;
+                try {
+                    tempResult = BaseVariable.
+                            studentApi.getStudentInfo(BaseVariable.sessionid);
+                } catch (TimeoutException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ApiException e) {
+                    e.printStackTrace();
+                }
+                if(tempResult!=null)
+                    BaseVariable.studentInfo=tempResult;
+
+
                 if (BaseVariable.studentInfo.getPresentSportRecordId() != -1) {
                     try {
                         List<TracePoint> result = BaseVariable.studentApi.getTrace(BaseVariable.sessionid, planId);
