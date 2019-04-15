@@ -368,6 +368,7 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser)
             resumeButtonColor();
+        resumeReDrawLine();
     }
 
     @Override
