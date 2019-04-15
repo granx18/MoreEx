@@ -75,7 +75,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
 
                 if (BaseVariable.studentInfo.getPresentSportRecordId() != -1) {
                     try {
-                        List<TracePoint> result = BaseVariable.studentApi.getTrace(BaseVariable.sessionid, planId);
+                        List<TracePoint> result = BaseVariable.studentApi.getTrace(BaseVariable.sessionid, BaseVariable.studentInfo.getPresentSportRecordId());
                         long time=result.get(result.size()-1).getTime()-result.get(0).getTime();
                         double distance=0;
                         for(int i=1;i<result.size();i++){
