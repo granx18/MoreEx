@@ -28,8 +28,10 @@ import java.util.concurrent.TimeoutException;
 import io.swagger.client.ApiException;
 import io.swagger.client.ApiInvoker;
 import io.swagger.client.Pair;
+import io.swagger.client.model.AResult;
 import io.swagger.client.model.ClassInfo;
 import io.swagger.client.model.Notice;
+import io.swagger.client.model.SessionId;
 import io.swagger.client.model.SportPlanInfo;
 import io.swagger.client.model.SportRecordInfo;
 import io.swagger.client.model.SportTypeInfo;
@@ -62,9 +64,9 @@ public class StudentApi {
    * @param sessionid 
    * @param hashedPrevPass 
    * @param hashedNewPass 
-   * @return Boolean
+   * @return AResult
   */
-  public Boolean changePassword (String sessionid, String hashedPrevPass, String hashedNewPass) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+  public AResult changePassword (String sessionid, String hashedPrevPass, String hashedNewPass) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = null;
 
     // create path and map variables
@@ -97,7 +99,7 @@ public class StudentApi {
     try {
       String localVarResponse = apiInvoker.invokeAPI (basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames);
       if (localVarResponse != null) {
-         return (Boolean) ApiInvoker.deserialize(localVarResponse, "", Boolean.class);
+         return (AResult) ApiInvoker.deserialize(localVarResponse, "", AResult.class);
       } else {
          return null;
       }
@@ -123,7 +125,7 @@ public class StudentApi {
    * 
    * @param sessionid    * @param hashedPrevPass    * @param hashedNewPass 
   */
-  public void changePassword (String sessionid, String hashedPrevPass, String hashedNewPass, final Response.Listener<Boolean> responseListener, final Response.ErrorListener errorListener) {
+  public void changePassword (String sessionid, String hashedPrevPass, String hashedNewPass, final Response.Listener<AResult> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;
 
 
@@ -166,7 +168,7 @@ public class StudentApi {
           @Override
           public void onResponse(String localVarResponse) {
             try {
-              responseListener.onResponse((Boolean) ApiInvoker.deserialize(localVarResponse,  "", Boolean.class));
+              responseListener.onResponse((AResult) ApiInvoker.deserialize(localVarResponse,  "", AResult.class));
             } catch (ApiException exception) {
                errorListener.onErrorResponse(new VolleyError(exception));
             }
@@ -185,9 +187,9 @@ public class StudentApi {
   * 结束运动，成功返回true
   * 
    * @param sessionid 
-   * @return Boolean
+   * @return AResult
   */
-  public Boolean endSport (String sessionid) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+  public AResult endSport (String sessionid) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = null;
 
     // create path and map variables
@@ -218,7 +220,7 @@ public class StudentApi {
     try {
       String localVarResponse = apiInvoker.invokeAPI (basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames);
       if (localVarResponse != null) {
-         return (Boolean) ApiInvoker.deserialize(localVarResponse, "", Boolean.class);
+         return (AResult) ApiInvoker.deserialize(localVarResponse, "", AResult.class);
       } else {
          return null;
       }
@@ -244,7 +246,7 @@ public class StudentApi {
    * 
    * @param sessionid 
   */
-  public void endSport (String sessionid, final Response.Listener<Boolean> responseListener, final Response.ErrorListener errorListener) {
+  public void endSport (String sessionid, final Response.Listener<AResult> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;
 
 
@@ -285,7 +287,7 @@ public class StudentApi {
           @Override
           public void onResponse(String localVarResponse) {
             try {
-              responseListener.onResponse((Boolean) ApiInvoker.deserialize(localVarResponse,  "", Boolean.class));
+              responseListener.onResponse((AResult) ApiInvoker.deserialize(localVarResponse,  "", AResult.class));
             } catch (ApiException exception) {
                errorListener.onErrorResponse(new VolleyError(exception));
             }
@@ -1141,9 +1143,9 @@ public class StudentApi {
   * 
    * @param cardId 
    * @param hashedPassword 
-   * @return String
+   * @return SessionId
   */
-  public String login (String cardId, String hashedPassword) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+  public SessionId login (String cardId, String hashedPassword) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = null;
 
     // create path and map variables
@@ -1175,7 +1177,7 @@ public class StudentApi {
     try {
       String localVarResponse = apiInvoker.invokeAPI (basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames);
       if (localVarResponse != null) {
-         return (String) ApiInvoker.deserialize(localVarResponse, "", String.class);
+         return (SessionId) ApiInvoker.deserialize(localVarResponse, "", SessionId.class);
       } else {
          return null;
       }
@@ -1201,7 +1203,7 @@ public class StudentApi {
    * 
    * @param cardId    * @param hashedPassword 
   */
-  public void login (String cardId, String hashedPassword, final Response.Listener<String> responseListener, final Response.ErrorListener errorListener) {
+  public void login (String cardId, String hashedPassword, final Response.Listener<SessionId> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;
 
 
@@ -1243,7 +1245,7 @@ public class StudentApi {
           @Override
           public void onResponse(String localVarResponse) {
             try {
-              responseListener.onResponse((String) ApiInvoker.deserialize(localVarResponse,  "", String.class));
+              responseListener.onResponse((SessionId) ApiInvoker.deserialize(localVarResponse,  "", SessionId.class));
             } catch (ApiException exception) {
                errorListener.onErrorResponse(new VolleyError(exception));
             }
@@ -1263,9 +1265,9 @@ public class StudentApi {
   * 
    * @param sessionid 
    * @param planId 
-   * @return Boolean
+   * @return AResult
   */
-  public Boolean startSport (String sessionid, Integer planId) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+  public AResult startSport (String sessionid, Integer planId) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = null;
 
     // create path and map variables
@@ -1297,7 +1299,7 @@ public class StudentApi {
     try {
       String localVarResponse = apiInvoker.invokeAPI (basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames);
       if (localVarResponse != null) {
-         return (Boolean) ApiInvoker.deserialize(localVarResponse, "", Boolean.class);
+         return (AResult) ApiInvoker.deserialize(localVarResponse, "", AResult.class);
       } else {
          return null;
       }
@@ -1323,7 +1325,7 @@ public class StudentApi {
    * 
    * @param sessionid    * @param planId 
   */
-  public void startSport (String sessionid, Integer planId, final Response.Listener<Boolean> responseListener, final Response.ErrorListener errorListener) {
+  public void startSport (String sessionid, Integer planId, final Response.Listener<AResult> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = null;
 
 
@@ -1365,7 +1367,7 @@ public class StudentApi {
           @Override
           public void onResponse(String localVarResponse) {
             try {
-              responseListener.onResponse((Boolean) ApiInvoker.deserialize(localVarResponse,  "", Boolean.class));
+              responseListener.onResponse((AResult) ApiInvoker.deserialize(localVarResponse,  "", AResult.class));
             } catch (ApiException exception) {
                errorListener.onErrorResponse(new VolleyError(exception));
             }
@@ -1385,9 +1387,9 @@ public class StudentApi {
   * 
    * @param sessionid 
    * @param point 
-   * @return Boolean
+   * @return AResult
   */
-  public Boolean submitTracePoint (String sessionid, TracePoint point) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
+  public AResult submitTracePoint (String sessionid, TracePoint point) throws TimeoutException, ExecutionException, InterruptedException, ApiException {
     Object postBody = point;
 
     // create path and map variables
@@ -1422,7 +1424,7 @@ public class StudentApi {
     try {
       String localVarResponse = apiInvoker.invokeAPI (basePath, path, "POST", queryParams, postBody, headerParams, formParams, contentType, authNames);
       if (localVarResponse != null) {
-         return (Boolean) ApiInvoker.deserialize(localVarResponse, "", Boolean.class);
+         return (AResult) ApiInvoker.deserialize(localVarResponse, "", AResult.class);
       } else {
          return null;
       }
@@ -1448,7 +1450,7 @@ public class StudentApi {
    * 
    * @param sessionid    * @param point 
   */
-  public void submitTracePoint (String sessionid, TracePoint point, final Response.Listener<Boolean> responseListener, final Response.ErrorListener errorListener) {
+  public void submitTracePoint (String sessionid, TracePoint point, final Response.Listener<AResult> responseListener, final Response.ErrorListener errorListener) {
     Object postBody = point;
 
 
@@ -1489,7 +1491,7 @@ public class StudentApi {
           @Override
           public void onResponse(String localVarResponse) {
             try {
-              responseListener.onResponse((Boolean) ApiInvoker.deserialize(localVarResponse,  "", Boolean.class));
+              responseListener.onResponse((AResult) ApiInvoker.deserialize(localVarResponse,  "", AResult.class));
             } catch (ApiException exception) {
                errorListener.onErrorResponse(new VolleyError(exception));
             }

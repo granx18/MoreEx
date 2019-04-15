@@ -57,6 +57,10 @@ public class JsonUtil {
   public static Type getListTypeForDeserialization(Class cls) {
     String className = cls.getSimpleName();
     
+    if ("AResult".equalsIgnoreCase(className)) {
+      return new TypeToken<List<AResult>>(){}.getType();
+    }
+    
     if ("AdminInfo".equalsIgnoreCase(className)) {
       return new TypeToken<List<AdminInfo>>(){}.getType();
     }
@@ -67,6 +71,10 @@ public class JsonUtil {
     
     if ("Notice".equalsIgnoreCase(className)) {
       return new TypeToken<List<Notice>>(){}.getType();
+    }
+    
+    if ("SessionId".equalsIgnoreCase(className)) {
+      return new TypeToken<List<SessionId>>(){}.getType();
     }
     
     if ("SportPlanInfo".equalsIgnoreCase(className)) {
@@ -99,6 +107,10 @@ public class JsonUtil {
   public static Type getTypeForDeserialization(Class cls) {
     String className = cls.getSimpleName();
     
+    if ("AResult".equalsIgnoreCase(className)) {
+      return new TypeToken<AResult>(){}.getType();
+    }
+    
     if ("AdminInfo".equalsIgnoreCase(className)) {
       return new TypeToken<AdminInfo>(){}.getType();
     }
@@ -109,6 +121,10 @@ public class JsonUtil {
     
     if ("Notice".equalsIgnoreCase(className)) {
       return new TypeToken<Notice>(){}.getType();
+    }
+    
+    if ("SessionId".equalsIgnoreCase(className)) {
+      return new TypeToken<SessionId>(){}.getType();
     }
     
     if ("SportPlanInfo".equalsIgnoreCase(className)) {

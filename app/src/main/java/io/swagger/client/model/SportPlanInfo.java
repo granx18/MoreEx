@@ -12,7 +12,6 @@
 
 package io.swagger.client.model;
 
-import java.util.Date;
 import io.swagger.annotations.*;
 import com.google.gson.annotations.SerializedName;
 
@@ -24,9 +23,9 @@ public class SportPlanInfo {
   @SerializedName("cancelled")
   private Boolean cancelled = null;
   @SerializedName("startTime")
-  private Date startTime = null;
+  private Long startTime = null;
   @SerializedName("endTime")
-  private Date endTime = null;
+  private Long endTime = null;
 
   /**
    * 跑操计划的id
@@ -54,10 +53,10 @@ public class SportPlanInfo {
    * 开始时间（精确到一天的一个时间点）
    **/
   @ApiModelProperty(required = true, value = "开始时间（精确到一天的一个时间点）")
-  public Date getStartTime() {
+  public Long getStartTime() {
     return startTime;
   }
-  public void setStartTime(Date startTime) {
+  public void setStartTime(Long startTime) {
     this.startTime = startTime;
   }
 
@@ -65,10 +64,10 @@ public class SportPlanInfo {
    * 结束时间（精确到一天的一个时间点）
    **/
   @ApiModelProperty(required = true, value = "结束时间（精确到一天的一个时间点）")
-  public Date getEndTime() {
+  public Long getEndTime() {
     return endTime;
   }
-  public void setEndTime(Date endTime) {
+  public void setEndTime(Long endTime) {
     this.endTime = endTime;
   }
 

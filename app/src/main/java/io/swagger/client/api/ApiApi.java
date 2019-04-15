@@ -12,8 +12,17 @@
 
 package io.swagger.client.api;
 
+import io.swagger.client.ApiInvoker;
+import io.swagger.client.ApiException;
+import io.swagger.client.Pair;
+
+import io.swagger.client.model.*;
+
+import java.util.*;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+
 
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -24,10 +33,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
-
-import io.swagger.client.ApiException;
-import io.swagger.client.ApiInvoker;
-import io.swagger.client.Pair;
 
 public class ApiApi {
   String basePath = "https://localhost";
