@@ -7,4 +7,7 @@ public interface IFragment1 extends BaseView {
 
     void onSuccessEndSport();
 
+    void onSuccessResumeMiles(double distance);
+
+    void onSuccessResumeTime(long distance);
 }

@@ -103,9 +103,11 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
             @Override
             public void onClick(View v) {
                 if(!BUTTON_STATE_PLAY){
+                    //请求开始
                     presenter.requestStartSport();
                 }
                 else{
+                    //请求结束
                     presenter.requestEndSport();
                 }
             }
@@ -325,11 +327,9 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
         mLocationClient.enableBackgroundLocation(2333,getSelfActivity().buildMapNotification());
 
         //位置时间初始化
-        textViewMiles.setText("路程/m\n"+0);
-        textViewTime.setText("时间/s\n"+0/1000);
+        textViewMiles.setText("路程/m\n"+String.format("%.2f", betweenDistance));
+        textViewTime.setText("时间/s\n"+(mCurrentTime-mStartTime)/1000);
         myLastLocation = null;
-        betweenDistance = 0;
-        mStartTime = System.currentTimeMillis();
 
         //轨迹
         if(mpolyline!=null)
@@ -354,4 +354,15 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
         if(isVisibleToUser)
             resumeButtonColor();
     }
+
+    @Override
+    public void onSuccessResumeMiles(double distance) {
+        betweenDistance = distance;
+    }
+
+    @Override
+    public void onSuccessResumeTime(long distance) {
+        mStartTime = System.currentTimeMillis()-distance;
+    }
+
 }

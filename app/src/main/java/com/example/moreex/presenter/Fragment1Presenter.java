@@ -34,6 +34,14 @@ public class Fragment1Presenter extends BasePresenter implements Fragment1Callba
         fragment1Model.executeRerequestSportTypeInfoTask();
     }
 
+    public void requestResumeMiles(){
+        //todo
+    }
+
+    public void requestResumeTime(){
+        //todo
+    }
+
     //结合Model返回的数据进行操作
     @Override
     public void onSuccessStartSport() {
@@ -83,5 +91,17 @@ public class Fragment1Presenter extends BasePresenter implements Fragment1Callba
     public void onFailureSportTypeInfo() {
         //todo
         getView().showToast("start failed");
+    }
+
+    @Override
+    //distance m
+    public void onSuccessResumeMiles(double distance) {
+        onSuccessResumeMiles(distance);
+    }
+
+    @Override
+    //distance millSeconds
+    public void onSuccessResumeTime(long distance) {
+        onSuccessResumeTime(distance);
     }
 }

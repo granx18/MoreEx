@@ -13,4 +13,7 @@ public interface Fragment1Callback extends BaseCallback {
 
     void onSuccessSportTypeInfo();
     void onFailureSportTypeInfo();
+
+    void onSuccessResumeMiles(double distance);
+    void onSuccessResumeTime(long distance);
 }
