@@ -362,7 +362,7 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
 
     }
 
-    //用于修复按钮颜色bug
+    //用于修复按钮颜色bug和修复轨迹
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
