@@ -22,8 +22,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
 
     public void executeRequestStartSport()
     {
-        startSportTask task=new startSportTask();
-        task.execute();
+        new startSportTask().execute();
     }
 
     public void executeRequestSubmitTracePoint(LatLng latLng){
@@ -53,11 +52,12 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
             protected Boolean doInBackground(String...strings)
             {
                 Integer planId=-1;
+                long time=System.currentTimeMillis();
                 for(int i=0;i<BaseVariable.sportPlanInfoList.size();i++) {
-                   long naotime=System.currentTimeMillis();
-                    if (naotime>=BaseVariable.sportPlanInfoList.get(i).getStartTime()
-                    &&naotime<=BaseVariable.sportPlanInfoList.get(i).getEndTime()
-                    &&BaseVariable.sportPlanInfoList.get(i).getCancelled()==false) {
+                    if (time>=BaseVariable.sportPlanInfoList.get(i).getStartTime()
+                    &&time<=BaseVariable.sportPlanInfoList.get(i).getEndTime()
+                    &&BaseVariable.sportPlanInfoList.get(i).getCancelled()==false
+                    &&BaseVariable.studentInfo.getPresentSportRecordId()==-1) {
                         planId = BaseVariable.sportPlanInfoList.get(i).getPlanId();
                     }
                 }
@@ -87,8 +87,9 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
             @Override
             protected void onPostExecute(Boolean s) {
                 super.onPostExecute(s);
-                if(s==true)
-                ((Fragment1Callback)mCallback).onSuccessStartSport();
+                if(s==true) {
+                    ((Fragment1Callback) mCallback).onSuccessStartSport();
+                }
                 else
                     ((Fragment1Callback)mCallback).
                             onFailureSubmitTracePoint();
