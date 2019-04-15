@@ -39,9 +39,10 @@ public class About extends BaseActivity {
                 .addItem(getQQElement("729354837"))
 
                 .addGroup("特别感谢")
-                .addGitHub("https://github.com/long1eu/SpaceTabLayout","SpaceTabLayout")
-                .addGitHub("https://github.com/Frank-Zhu/PullZoomView","PullZoomView")
-                .addGitHub("https://github.com/markushi/android-circlebutton","CircleButton")
+                .addGitHub("long1eu/SpaceTabLayout","SpaceTabLayout")
+                .addGitHub("Frank-Zhu/PullZoomView","PullZoomView")
+                .addGitHub("markushi/android-circlebutton","CircleButton")
+                .addGitHub("medyo/android-about-page","AboutPage")
                 .addTwitter("rt_921","ryoga")
 
                 .create();
