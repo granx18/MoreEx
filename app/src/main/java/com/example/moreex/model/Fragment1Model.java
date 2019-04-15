@@ -76,7 +76,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                 if (BaseVariable.studentInfo.getPresentSportRecordId() != -1) {
                     try {
                         List<TracePoint> result = BaseVariable.studentApi.getTrace(BaseVariable.sessionid, planId);
-                        long time=result.get(result.size()).getTime()-result.get(0).getTime();
+                        long time=result.get(result.size()-1).getTime()-result.get(0).getTime();
                         double distance=0;
                         for(int i=1;i<result.size();i++){
                             distance+=result.get(i).LengthFromM((result.get((i-1))));
@@ -153,7 +153,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                 try {
                     Boolean result = BaseVariable.studentApi.
                             submitTracePoint(BaseVariable.sessionid, point).getResult();
-                    System.out.println(result);
+                    return result;
                 } catch (ApiException e) {
                     System.err.println("Exception when calling " +
                             "StudentApi#submitTracePoint");
@@ -173,8 +173,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
             {
 
                 if(r==true)
-                    ((Fragment1Callback)mCallback).
-                            onFailureSubmitTracePoint();
+                    ((Fragment1Callback)mCallback).onSuccessSubmitTracePoint();
                 else
                     ((Fragment1Callback)mCallback).
                             onFailureSubmitTracePoint();
