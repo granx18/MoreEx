@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
 import io.swagger.client.ApiException;
+import io.swagger.client.model.SportRecordInfo;
 import io.swagger.client.model.SportTypeInfo;
 import io.swagger.client.model.StudentInfo;
 import io.swagger.client.model.TracePoint;
@@ -76,14 +77,20 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                 if (BaseVariable.studentInfo.getPresentSportRecordId() != -1) {
                     try {
                         List<TracePoint> result = BaseVariable.studentApi.getTrace(BaseVariable.sessionid, BaseVariable.studentInfo.getPresentSportRecordId());
-                        long time=result.get(result.size()-1).getTime()-result.get(0).getTime();
-                        double distance=0;
-                        for(int i=1;i<result.size();i++){
-                            distance+=result.get(i).LengthFromM((result.get((i-1))));
+                        if(result.size()<1) {
+                            ((Fragment1Callback) mCallback).onSuccessResumeTime(0);
+                            ((Fragment1Callback) mCallback).onSuccessResumeMiles(0);
                         }
-                        ((Fragment1Callback)mCallback).onSuccessResumeTime(time);
-                        ((Fragment1Callback)mCallback).onSuccessResumeMiles(distance);
-                        ((Fragment1Callback)mCallback).onSuccessResumeReDrawLine(result);
+                        else {
+                            long time = result.get(result.size() - 1).getTime() - result.get(0).getTime();
+                            double distance = 0;
+                            for (int i = 1; i < result.size(); i++) {
+                                distance += result.get(i).LengthFromM((result.get((i - 1))));
+                            }
+                            ((Fragment1Callback) mCallback).onSuccessResumeTime(time);
+                            ((Fragment1Callback) mCallback).onSuccessResumeMiles(distance);
+                            ((Fragment1Callback) mCallback).onSuccessResumeReDrawLine(result);
+                        }
                     } catch (TimeoutException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
@@ -125,7 +132,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                         e.printStackTrace();
                     }
                 }
-                return null;
+                return false;
             }
 
             @Override
@@ -146,10 +153,28 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
             @Override
             protected Boolean doInBackground(TracePoint ...para) {
                 TracePoint point = para[0]; // TracePoint |
-                int i=0;
-                for(;i<BaseVariable.sportPlanInfoList.size()&&BaseVariable.sportPlanInfoList.get(i).getPlanId()!=planId;i++);
-                    if(point.getTime()>=BaseVariable.sportPlanInfoList.get(i).getEndTime())
-                        executeRequestEndSport();
+                List<SportRecordInfo> SportRecordInfoResult=null;
+                try {
+                    SportRecordInfoResult = BaseVariable.studentApi.getSportRecords(BaseVariable.sessionid);
+
+                } catch (TimeoutException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ApiException e) {
+                    e.printStackTrace();
+                }
+
+                int i;
+                for(i=0;i<SportRecordInfoResult.size()&&SportRecordInfoResult.get(i).getRecordId()!=BaseVariable.studentInfo.getPresentSportRecordId();i++);
+
+                int j=0;
+                for(;j<BaseVariable.sportPlanInfoList.size()&&BaseVariable.sportPlanInfoList.get(j).getPlanId()!=SportRecordInfoResult.get(i).getPlanId();j++);
+
+                if(point.getTime()>=BaseVariable.sportPlanInfoList.get(j).getEndTime())
+                    executeRequestEndSport();
                 try {
                     Boolean result = BaseVariable.studentApi.
                             submitTracePoint(BaseVariable.sessionid, point).getResult();
