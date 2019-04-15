@@ -24,16 +24,14 @@
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".view.main.About">
+        <activity android:name=".view.main.About"></activity>
+        <activity android:name=".view.main.Me" />
+        <activity android:name=".view.login.AActivityOne">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".view.main.Me" />
-        <activity android:name=".view.login.AActivityOne">
-
         </activity>
         <activity
             android:name=".view.login.AActivityTwo"
