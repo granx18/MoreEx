@@ -190,14 +190,14 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                 } catch (TimeoutException e) {
                     e.printStackTrace();
                 }
-                return null;
+                return false;
             }
 
             @Override
             protected void onPostExecute(Boolean r)
             {
 
-                if(r==true)
+                if(r)
                     ((Fragment1Callback)mCallback).onSuccessSubmitTracePoint();
                 else
                     ((Fragment1Callback)mCallback).
@@ -212,7 +212,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                 try {
                     Boolean result = BaseVariable.studentApi.
                             endSport(BaseVariable.sessionid).getResult();
-                    System.out.println(result);
+                    return result;
                 } catch (ApiException e) {
                     System.err.println("Exception when " +
                             "calling StudentApi#endSport");
@@ -224,14 +224,14 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                 } catch (TimeoutException e) {
                     e.printStackTrace();
                 }
-                return null;
+                return false;
             }
 
             @Override
             protected void onPostExecute(Boolean r)
             {
                 super.onPostExecute(r);
-                if(r==true)
+                if(r)
                 ((Fragment1Callback)mCallback).onSuccessEndSport();
                 else
                     ((Fragment1Callback)mCallback).
