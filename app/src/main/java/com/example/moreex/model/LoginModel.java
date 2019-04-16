@@ -8,6 +8,7 @@ import com.example.moreex.presenter.LoginCallback;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -24,10 +25,12 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
     private T mCallback;
     private String cardId;
     private String password;
+    private List<Notice> list;
 
     public LoginModel(T mCallBack)
     {
         this.mCallback = mCallBack;
+        list=new ArrayList<Notice>();
     }
 
     public void logining(String cardId,String password){
@@ -66,6 +69,9 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
                     BaseVariable.sessionid = BaseVariable.studentApi.login(cardId, hashedPassword).getSessionid();
                     if(BaseVariable.sessionid!=null||BaseVariable.sessionid.length()>10)
                     {
+                        List<Notice> result = BaseVariable.
+                                studentApi.getNotices(BaseVariable.sessionid);
+                        list=result;
                         BaseVariable.password=password;
                         return true;
                     }
@@ -84,9 +90,9 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
             super.onPostExecute(s);
             if(BaseVariable.sessionid != null){
                 ((LoginCallback)mCallback).onSuccess();
+                ((LoginCallback)mCallback).onSuccessNotice(list);
                 //登陆成功，查询基本信息表并保存
                 new executeRequteBaseStudentInfoTask().execute();
-                executeRequestNotice();
             }
             else
                 ((LoginCallback)mCallback).onFailure();
