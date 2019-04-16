@@ -38,9 +38,7 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
 
     private LoginPresenter loginPresenter;
 
-    //公告通知类
-    NotificationManager mNotificationManager;
-    NotificationCompat.Builder mBuilder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +47,6 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
         initView();
         setListener();
         loginPresenter = new LoginPresenter(this);
-
-        //请求公告
-        loginPresenter.requestNotice();
     }
 
     private void initView() {
@@ -148,26 +143,4 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
 
     }
 
-
-    public void showNotice(String title,String detail){
-        //公告通知类
-        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        mBuilder = new NotificationCompat.Builder(this);
-
-
-        mBuilder.setContentTitle(title);
-        mBuilder.setContentText(detail);
-        Notification notification = mBuilder.build();
-        mBuilder.setDefaults(Notification.DEFAULT_SOUND);
-        mBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
-        mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
-        mNotificationManager.notify(1,notification);
-    }
-
-    @Override
-    public void onSuccessNotice(List<Notice> list) {
-        for(Notice i : list){
-            showNotice(i.getTitle(),i.getDetail());
-        }
-    }
 }
