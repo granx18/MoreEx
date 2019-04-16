@@ -174,8 +174,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
 
                     int j = 0;
                     for (; j < BaseVariable.sportPlanInfoList.size() && BaseVariable.sportPlanInfoList.get(j).getPlanId() != SportRecordInfoResult.get(i).getPlanId(); j++)
-                        ;
-
+                    ;
                     if (point.getTime() >= BaseVariable.sportPlanInfoList.get(j).getEndTime())
                         executeRequestEndSport();
                     else {

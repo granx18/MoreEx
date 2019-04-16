@@ -86,6 +86,7 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
                 ((LoginCallback)mCallback).onSuccess();
                 //登陆成功，查询基本信息表并保存
                 new executeRequteBaseStudentInfoTask().execute();
+                executeRequestNotice();
             }
             else
                 ((LoginCallback)mCallback).onFailure();
@@ -118,6 +119,7 @@ public class LoginModel <T extends BaseCallback>extends BaseModel {
                         BaseVariable.studentApi.getSportTypesInfo(BaseVariable.sessionid);
                 if(SportTypeInfoResult!=null)
                     BaseVariable.sportTypeInfo=SportTypeInfoResult;
+
 
             } catch (ApiException e) {
                 System.err.println("Exception when calling StudentApi#get student base information");
