@@ -18,9 +18,7 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 public class LoginPresenter extends BasePresenter implements LoginCallback{
 
     private LoginModel loginModel;
-    //公告通知类
-    NotificationManager mNotificationManager;
-    NotificationCompat.Builder mBuilder;
+
     public LoginPresenter(BaseView view) {
         super(view);
 
@@ -62,25 +60,7 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
         ((IActivityTwo)getView()).onSuccess();
     }
 
-
-    public void showNotice(String title,String detail){
-        //公告通知类
-        mNotificationManager = (NotificationManager)(getView().getSelfActivity()).getSystemService(NOTIFICATION_SERVICE);
-        mBuilder = new NotificationCompat.Builder(getView().getSelfActivity());
-
-
-        mBuilder.setContentTitle(title);
-        mBuilder.setContentText(detail);
-        Notification notification = mBuilder.build();
-        mBuilder.setDefaults(Notification.DEFAULT_SOUND);
-        mBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
-        mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
-        mNotificationManager.notify(1,notification);
-    }
-
     public void onSuccessNotice(List<Notice> list) {
-        for(Notice i : list){
-            showNotice(i.getTitle(),i.getDetail());
-        }
+        ((IActivityOne)getView()).onSuccessNotice(list);
     }
 }
