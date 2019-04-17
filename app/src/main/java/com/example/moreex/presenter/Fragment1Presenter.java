@@ -49,7 +49,7 @@ public class Fragment1Presenter extends BasePresenter implements Fragment1Callba
     @Override
     public void onSuccessSubmitTracePoint() {
         //todo
-        getView().showToast("submit success");
+//        getView().showToast("submit success");
     }
 
     @Override

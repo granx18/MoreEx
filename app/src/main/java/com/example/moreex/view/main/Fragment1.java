@@ -64,6 +64,9 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
     private PolylineOptions mPolyoptions;
     private Polyline mpolyline;
 
+    //坐标集合
+    private List<LatLng>latLngs = new ArrayList<>();
+
     //位置时间
     LatLng myLastLocation = null;
     double betweenDistance = 0;
@@ -187,6 +190,8 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
 
         //轨迹
         mPolyoptions.add(myLocation);
+        //保存点
+        latLngs.add(myLocation);
         reDrawLine();
     }
 
@@ -203,20 +208,16 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
     //恢复轨迹点
     private void resumeReDrawLine(List<TracePoint> list){
         for(TracePoint tracePoint:list){
-            mPolyoptions.add(new LatLng(tracePoint.getLatitude(),tracePoint.getLongitude()));
+            LatLng latLng = new LatLng(tracePoint.getLatitude(),tracePoint.getLongitude());
+            mPolyoptions.add(latLng);
+            latLngs.add(latLng);
             reDrawLine();
         }
     }
     private void resumeReDrawLine(){
-        if(mPolyoptions!=null && mPolyoptions.getPoints().size()>1){
-            List<LatLng>list = mPolyoptions.getPoints();
-            mPolyoptions = new PolylineOptions();
-            mPolyoptions.width(10f);
-            mPolyoptions.color(Color.GRAY);
-            for(LatLng latLng : list){
-                mPolyoptions.add(latLng);
-                reDrawLine();
-            }
+        for(LatLng latLng : latLngs){
+            mPolyoptions.add(latLng);
+            reDrawLine();
         }
     }
 
@@ -255,6 +256,7 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
         super.onResume();
         textureMapView.onResume();
         resumeButtonColor();
+        resumeReDrawLine();
     }
 
     /**
@@ -318,6 +320,9 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
         }
     }
 
+    public boolean getState(){
+        return BUTTON_STATE_PLAY;
+    }
 
     @Override
     public void showLoading() {
@@ -351,10 +356,6 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
         textViewMiles.setText("路程/m\n"+String.format("%.2f", betweenDistance));
         textViewTime.setText("时间/s\n"+(mCurrentTime-mStartTime)/1000);
         myLastLocation = null;
-
-        //轨迹
-        if(mpolyline!=null)
-            mpolyline.remove();
 
     }
 

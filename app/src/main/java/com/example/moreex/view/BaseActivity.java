@@ -108,8 +108,6 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     }
 
 
-
-
     //map通知栏
     private static final String NOTIFICATION_CHANNEL_NAME = "BackgroundLocation";
     private NotificationManager notificationManager = null;
@@ -137,7 +135,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         } else {
             builder = new Notification.Builder(getApplicationContext());
         }
-        builder.setSmallIcon(R.drawable.ic_launcher)
+        builder.setSmallIcon(R.drawable.rounded_icon)
                 .setContentTitle("MoreEx")
                 .setContentText("正在后台运行")
                 .setWhen(System.currentTimeMillis());

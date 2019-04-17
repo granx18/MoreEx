@@ -97,6 +97,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        //判断是否正在跑操
+        if(((Fragment1)fragmentList.get(0)).getState()){
+            showToast("请先完成跑操");
+            return ;
+        }
+
         if(!mBackKeyPressed){
             Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
              mBackKeyPressed = true;
