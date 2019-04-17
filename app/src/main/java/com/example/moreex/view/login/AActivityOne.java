@@ -3,8 +3,12 @@ package com.example.moreex.view.login;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -143,22 +147,53 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
 
     }
 
-    //公告通知类
-    NotificationManager mNotificationManager;
-    NotificationCompat.Builder mBuilder;
+    //map通知栏
+    private static final String NOTIFICATION_CHANNEL_NAME = "Notice";
+    private NotificationManager notificationManager = null;
+    boolean isCreateChannel = false;
     public void showNotice(String title,String detail){
-        //公告通知类
-        mNotificationManager = (NotificationManager)this.getSystemService(NOTIFICATION_SERVICE);
-        mBuilder = new NotificationCompat.Builder(this);
+        Notification.Builder builder = null;
+        Notification notification = null;
+        if(android.os.Build.VERSION.SDK_INT >= 26) {
+            if (null == notificationManager) {
+                notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            }
+            String channelId = getPackageName();
+            if(!isCreateChannel) {
+                NotificationChannel notificationChannel = new NotificationChannel(channelId,
+                        NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+                notificationChannel.enableLights(true);//是否在桌面icon右上角展示小圆点
+                notificationChannel.setLightColor(Color.BLUE); //小圆点颜色
+                notificationChannel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知
+                notificationManager.createNotificationChannel(notificationChannel);
+                isCreateChannel = true;
+            }
+            builder = new Notification.Builder(getApplicationContext(), channelId);
+        } else {
+            builder = new Notification.Builder(getApplicationContext());
+        }
+        builder.setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(detail)
+                .setWhen(System.currentTimeMillis());
+
+        //回到MainActivity
+        Intent intent = new Intent(AActivityOne.this,MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), title.hashCode(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        builder.setContentIntent(contentIntent);
+        //解决7.0通知合并问题
+        builder.setGroupSummary(false);
+        builder.setGroup("group");
+
+        if (android.os.Build.VERSION.SDK_INT >= 16) {
+            notification = builder.build();
+        } else {
+            notification=builder.getNotification();
+        }
+        notificationManager.notify(title.hashCode(),notification);
 
 
-        mBuilder.setContentTitle(title);
-        mBuilder.setContentText(detail);
-        Notification notification = mBuilder.build();
-        mBuilder.setDefaults(Notification.DEFAULT_SOUND);
-        mBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
-        mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
-        mNotificationManager.notify(1,notification);
     }
 
     public void onSuccessNotice(List<Notice> list) {
