@@ -35,14 +35,12 @@ public class About extends BaseActivity {
 
                 .addGroup("Acac1a")
                 .addEmail("729354837@qq.com")
-                .addTwitter("Granx18","Granx18")
                 .addItem(getQQElement("729354837"))
 
                 .addGroup("特别感谢")
                 .addGitHub("long1eu/SpaceTabLayout","SpaceTabLayout")
                 .addGitHub("Frank-Zhu/PullZoomView","PullZoomView")
                 .addGitHub("markushi/android-circlebutton","CircleButton")
-                .addGitHub("medyo/android-about-page","AboutPage")
                 .addTwitter("rt_921","ryoga")
 
                 .create();

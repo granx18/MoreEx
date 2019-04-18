@@ -172,7 +172,7 @@ public class AActivityOne extends BaseActivity implements IActivityOne{
         } else {
             builder = new Notification.Builder(getApplicationContext());
         }
-        builder.setSmallIcon(R.drawable.ic_launcher)
+        builder.setSmallIcon(R.drawable.rounded_icon)
                 .setContentTitle(title)
                 .setContentText(detail)
                 .setWhen(System.currentTimeMillis());

@@ -47,7 +47,7 @@ public class Fragment3 extends Fragment implements IFragment3{
         View view = inflater.inflate(R.layout.fragment3, container, false);
         listView = view.findViewById(R.id.listview_options);
 
-        String[] adapterData = new String[]{"我","更改个人封面","更改密码","关于"};
+        String[] adapterData = new String[]{"我","更改密码","关于"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getSelfActivity()
                  ,android.R.layout.simple_list_item_1,adapterData);
         listView.setAdapter(adapter);
@@ -68,14 +68,7 @@ public class Fragment3 extends Fragment implements IFragment3{
                     startActivity(i);
                     break;
                 }
-                case 1: {
-                    //调用系统相册
-                    Intent i = new Intent(
-                            Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(i,RESULT_LOAD_IMAGE);
-                    break;
-                }
-                case 2:{
+                case 1:{
                     final EditText et = new EditText(getContext());
                     new AlertDialog.Builder(getContext()).setTitle("更改密码")
                             .setIcon(android.R.drawable.ic_dialog_info)
@@ -95,7 +88,7 @@ public class Fragment3 extends Fragment implements IFragment3{
                             .show();
                     break;
                 }
-                case 3:{
+                case 2:{
                     Intent intent = new Intent(getContext(),About.class);
                     startActivity(intent);
                     break;

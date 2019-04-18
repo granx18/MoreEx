@@ -45,7 +45,7 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
 
     private static final String TAG = "Fragment1";
     public Fragment1Presenter presenter = new Fragment1Presenter(this);
-
+    public int RECORD_TIMES = 0;    //用来发射点
     //地图
     private TextureMapView textureMapView;
     private AMap aMap;
@@ -174,7 +174,6 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
     public void onLocationChanged(AMapLocation aMapLocation) {
         LatLng myLocation = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
         submitPerFive(myLocation);
-        Log.d(TAG, myLocation.toString());
 
         if(myLastLocation != null){
             betweenDistance += AMapUtils.calculateLineDistance(myLastLocation,myLocation);
@@ -203,24 +202,12 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
     //恢复轨迹点
     private void resumeReDrawLine(List<TracePoint> list){
         for(TracePoint tracePoint:list){
-            mPolyoptions.add(new LatLng(tracePoint.getLatitude(),tracePoint.getLongitude()));
+            LatLng latLng = new LatLng(tracePoint.getLatitude(),tracePoint.getLongitude());
+            mPolyoptions.add(latLng);
             reDrawLine();
         }
     }
-    private void resumeReDrawLine(){
-        if(mPolyoptions!=null && mPolyoptions.getPoints().size()>1){
-            List<LatLng>list = mPolyoptions.getPoints();
-            mPolyoptions = new PolylineOptions();
-            mPolyoptions.width(10f);
-            mPolyoptions.color(Color.GRAY);
-            for(LatLng latLng : list){
-                mPolyoptions.add(latLng);
-                reDrawLine();
-            }
-        }
-    }
 
-    public int RECORD_TIMES = 0;
     public void submitPerFive(LatLng myLocation){
         RECORD_TIMES++;
         if(RECORD_TIMES==1){
@@ -318,6 +305,9 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
         }
     }
 
+    public boolean getState(){
+        return BUTTON_STATE_PLAY;
+    }
 
     @Override
     public void showLoading() {
@@ -352,10 +342,6 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
         textViewTime.setText("时间/s\n"+(mCurrentTime-mStartTime)/1000);
         myLastLocation = null;
 
-        //轨迹
-        if(mpolyline!=null)
-            mpolyline.remove();
-
     }
 
     @Override
@@ -368,14 +354,14 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
 
     }
 
-    //用于修复按钮颜色bug和修复轨迹
+    //用于修复按钮颜色bug
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             resumeButtonColor();
-            resumeReDrawLine();
         }
+        Log.d(TAG, "setUserVisibleHint: ");
     }
 
     @Override
