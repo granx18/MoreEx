@@ -19,13 +19,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--keep   class com.amap.api.maps.**{*;}
--keep   class com.autonavi.**{*;}
--keep   class com.amap.api.trace.**{*;}
--keep class com.amap.api.location.**{*;}
--keep class com.amap.api.fence.**{*;}
--keep class com.autonavi.aps.amapapi.model.**{*;}
 
+-dontwarn org.apache.**
+-keep class io.reactivex.**{*;}
+-keep class org.reactivestreams.**{*;}
+-keep class android.arch.**{*;}
+-keep class com.android.volley.**{*;}
+-keep class com.ecloud.pulltozoomview.**{*;}
+-keep class com.github.ybq.android.spinkit.**{*;}
+-keep class com.google.gson.**{*;}
 #############################################
 #
 # 基本指令区域（没什么别的需求不需要动）
@@ -73,7 +75,7 @@
 # 保留我们使用的四大组件，自定义的Application等等这些类不被混淆
 # 因为这些子类都有可能被外部调用
 -keep public class * extends android.app.Activity
--keep public class * extends android.app.Appliction
+-keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.BroadcastReceiver
 -keep public class * extends android.content.ContentProvider
