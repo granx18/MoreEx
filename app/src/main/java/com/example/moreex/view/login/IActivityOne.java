@@ -14,4 +14,5 @@ public interface IActivityOne extends BaseView {
     void showWrongToast();
 
     void onSuccessNotice(List<Notice> list);
+
 }

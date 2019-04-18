@@ -202,15 +202,21 @@ public class Fragment1 extends Fragment implements IFragment1, AMapLocationListe
     }
     //恢复轨迹点
     private void resumeReDrawLine(List<TracePoint> list){
-        List<LatLng>latLngs = new ArrayList<>();
         for(TracePoint tracePoint:list){
-            latLngs.add(new LatLng(tracePoint.getLatitude(),tracePoint.getLongitude()));
+            mPolyoptions.add(new LatLng(tracePoint.getLatitude(),tracePoint.getLongitude()));
+            reDrawLine();
         }
-        mpolyline = aMap.addPolyline(new PolylineOptions().addAll(mPolyoptions.getPoints()).width(10f).color(Color.GRAY));
     }
     private void resumeReDrawLine(){
         if(mPolyoptions!=null && mPolyoptions.getPoints().size()>1){
-            mpolyline = aMap.addPolyline(new PolylineOptions().addAll(mPolyoptions.getPoints()).width(10f).color(Color.GRAY));
+            List<LatLng>list = mPolyoptions.getPoints();
+            mPolyoptions = new PolylineOptions();
+            mPolyoptions.width(10f);
+            mPolyoptions.color(Color.GRAY);
+            for(LatLng latLng : list){
+                mPolyoptions.add(latLng);
+                reDrawLine();
+            }
         }
     }
 

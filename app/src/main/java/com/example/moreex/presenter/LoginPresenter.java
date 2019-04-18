@@ -1,5 +1,9 @@
 package com.example.moreex.presenter;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.support.v4.app.NotificationCompat;
+
 import com.example.moreex.model.LoginModel;
 import com.example.moreex.view.BaseView;
 import com.example.moreex.view.login.IActivityOne;
@@ -8,6 +12,8 @@ import com.example.moreex.view.login.IActivityTwo;
 import java.util.List;
 
 import io.swagger.client.model.Notice;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class LoginPresenter extends BasePresenter implements LoginCallback{
 
@@ -23,11 +29,6 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
     public void requestLogin(String cardId,String password){
         getView().showLoading();
         loginModel.logining(cardId,password);
-    }
-
-    public void requestNotice(){
-        //todo
-        loginModel.executeRequestNotice();
     }
 
     public void requestChangeIP(String ip,String port){
@@ -55,12 +56,11 @@ public class LoginPresenter extends BasePresenter implements LoginCallback{
     }
 
     @Override
-    public void onSuccessNotice(List<Notice> list) {
-        ((IActivityOne)getView()).onSuccessNotice(list);
-    }
-
-    @Override
     public void onSuccessChangeIP() {
         ((IActivityTwo)getView()).onSuccess();
+    }
+
+    public void onSuccessNotice(List<Notice> list) {
+        ((IActivityOne)getView()).onSuccessNotice(list);
     }
 }

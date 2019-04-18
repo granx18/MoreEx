@@ -56,7 +56,7 @@ public class Fragment2Model <T extends BaseCallback>extends BaseModel {
 
         @Override
         public int compare(StudentInfo o1, StudentInfo o2) {
-            return o1.getSportDays()-o2.getSportDays();
+            return o2.getSportDays()-o1.getSportDays();
         }
     }
 }

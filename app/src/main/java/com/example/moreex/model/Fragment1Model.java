@@ -167,37 +167,49 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                     e.printStackTrace();
                 }
 
-                int i;
-                for(i=0;i<SportRecordInfoResult.size()&&SportRecordInfoResult.get(i).getRecordId()!=BaseVariable.studentInfo.getPresentSportRecordId();i++);
-
-                int j=0;
-                for(;j<BaseVariable.sportPlanInfoList.size()&&BaseVariable.sportPlanInfoList.get(j).getPlanId()!=SportRecordInfoResult.get(i).getPlanId();j++);
-
-                if(point.getTime()>=BaseVariable.sportPlanInfoList.get(j).getEndTime())
-                    executeRequestEndSport();
                 try {
-                    Boolean result = BaseVariable.studentApi.
-                            submitTracePoint(BaseVariable.sessionid, point).getResult();
-                    return result;
-                } catch (ApiException e) {
-                    System.err.println("Exception when calling " +
+                    int i;
+                    for (i = 0; i < SportRecordInfoResult.size() && SportRecordInfoResult.get(i).getRecordId() != BaseVariable.studentInfo.getPresentSportRecordId(); i++)
+                        ;
+
+                    int j = 0;
+                    for (; j < BaseVariable.sportPlanInfoList.size() && BaseVariable.sportPlanInfoList.get(j).getPlanId() != SportRecordInfoResult.get(i).getPlanId(); j++)
+                    ;
+                    if (point.getTime() >= BaseVariable.sportPlanInfoList.get(j).getEndTime())
+                        executeRequestEndSport();
+                    else {
+                        try {
+                            Boolean result = BaseVariable.studentApi.
+                                    submitTracePoint(BaseVariable.sessionid, point).getResult();
+                            return result;
+                        } catch (ApiException e) {
+                            System.err.println("Exception when calling " +
+                                    "StudentApi#submitTracePoint");
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (TimeoutException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+                catch (NullPointerException e)
+                {
+                    System.err.println("NullPointerException when calling " +
                             "StudentApi#submitTracePoint");
                     e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (TimeoutException e) {
-                    e.printStackTrace();
                 }
-                return null;
+                return false;
             }
 
             @Override
             protected void onPostExecute(Boolean r)
             {
 
-                if(r==true)
+                if(r)
                     ((Fragment1Callback)mCallback).onSuccessSubmitTracePoint();
                 else
                     ((Fragment1Callback)mCallback).
@@ -212,7 +224,7 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                 try {
                     Boolean result = BaseVariable.studentApi.
                             endSport(BaseVariable.sessionid).getResult();
-                    System.out.println(result);
+                    return result;
                 } catch (ApiException e) {
                     System.err.println("Exception when " +
                             "calling StudentApi#endSport");
@@ -224,14 +236,14 @@ public class Fragment1Model<T extends BaseCallback> extends BaseModel {
                 } catch (TimeoutException e) {
                     e.printStackTrace();
                 }
-                return null;
+                return false;
             }
 
             @Override
             protected void onPostExecute(Boolean r)
             {
                 super.onPostExecute(r);
-                if(r==true)
+                if(r)
                 ((Fragment1Callback)mCallback).onSuccessEndSport();
                 else
                     ((Fragment1Callback)mCallback).
